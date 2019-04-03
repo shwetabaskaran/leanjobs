@@ -22,5 +22,8 @@
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_forgot_password">ForgotPassword</string>
+    <string name="title_activity_admin_login">AdminLogin</string>
 
 </resources>
