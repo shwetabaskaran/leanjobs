@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_userprofile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.leanjobs.UserProfile">
+
+    <FrameLayout
+        android:id="@+id/userframe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/userprofilePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/user"/>
+
+        <ImageButton
+            android:id="@+id/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:background="@drawable/smallcamera"/>
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/userframe">
+
+        <TextView
+            android:id="@+id/textuserFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Full Name" />
+
+        <EditText
+            android:id="@+id/edituserFullName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textuserFullName"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="15dp"
+            android:imeOptions="actionNext">
+
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/changeUserName"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/edituserFullName"
+            android:layout_alignBottom="@+id/edituserFullName"
+            android:layout_alignRight="@+id/edituserFullName"
+            android:src="@drawable/edit_icon" />
+
+        <TextView
+            android:id="@+id/textuserEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edituserFullName"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Email Address" />
+
+        <EditText
+            android:id="@+id/edituserEmail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textuserEmail"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:imeOptions="actionNext">
+
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/changeUserEmail"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/edituserEmail"
+            android:layout_alignBottom="@+id/edituserEmail"
+            android:layout_alignRight="@+id/edituserEmail"
+            android:src="@drawable/edit_icon" />
+
+        <TextView
+            android:id="@+id/textuserMobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edituserEmail"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Mobile Number" />
+
+        <EditText
+            android:id="@+id/edituserMobile"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textuserMobile"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:imeOptions="actionNext">
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/changeUserMobile"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/edituserMobile"
+            android:layout_alignBottom="@+id/edituserMobile"
+            android:layout_alignRight="@+id/edituserMobile"
+            android:src="@drawable/edit_icon" />
+
+        <Button
+            android:id="@+id/userprofileUploadResume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:layout_below="@+id/edituserMobile"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@drawable/upload"
+            android:layout_marginBottom="40dp"
+            android:text="Upload Resume" />
+
+        <Button
+            android:id="@+id/userprofSave"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/black"
+            android:textColor="@color/white"
+            android:layout_below="@+id/userprofileUploadResume"
+            android:text="Save" />
+
+    </RelativeLayout>
+</RelativeLayout>
