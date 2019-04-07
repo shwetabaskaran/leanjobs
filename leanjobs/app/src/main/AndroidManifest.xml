@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity_viewMyApplications_listItem"></activity>
+        <activity android:name=".ApplicantDetails" android:exported="true"></activity>
+        <activity android:name=".activity_viewMyApplications_listItem" />
         <activity android:name=".ViewMyApplications" />
         <activity android:name=".ApplicationForm" />
         <activity android:name=".UserJobDetails" />
