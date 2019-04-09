@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/CustomActionBarTheme">
         <activity android:name=".QuestionnaireResponse"></activity>
         <activity
             android:name=".ApplicantDetails"
