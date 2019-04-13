@@ -2,12 +2,92 @@ package com.example.leanjobs;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class SignUp extends AppCompatActivity {
+    EditText Email, Password, Full_Name, Phone_Num;
+    Button Submit;
+    String URLPost="http://dhillonds.com/leanjobsweb/index.php/api/users/register";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        Email = (EditText)findViewById(R.id.editEmail);
+        Password = (EditText) findViewById(R.id.editPassword);
+        Full_Name = (EditText) findViewById(R.id.editFullName);
+        Phone_Num = (EditText) findViewById(R.id.editMobile);
+        Submit = (Button) findViewById(R.id.Signup);
+
+        Submit.setOnClickListener(new Button.OnClickListener() {
+
+            public void onClick(View v) {
+                try {
+                    PostSignUpData();
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+    }
+
+    private void PostSignUpData() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URLPost, new Response.Listener<String>(){
+
+            @Override
+            public void onResponse(String response) {
+            Toast.makeText(getApplication(),response,Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+        Toast.makeText(SignUp.this,error+"",Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError{
+                Map<String,String> params = new HashMap<String,String>();
+                String email = Email.getText().toString();
+                String password = Password.getText().toString();
+                String full_name = Full_Name.getText().toString();
+                String phone_num = Phone_Num.getText().toString();
+                params.put("email",email);
+                params.put("password",password);
+                params.put("full_name",full_name);
+                params.put("phone_num",phone_num);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }
