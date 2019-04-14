@@ -1,44 +1,36 @@
 package com.example.leanjobs;
-
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
-
-
     Button btnadmlogin, btnforgotpassword, btnsignup, btnlogin;
+    EditText Email,Password;
+    String URLPost="http://dhillonds.com/leanjobsweb/index.php/api/users/login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        btnsignup = (Button) findViewById(R.id.btnsignup);
-        btnadmlogin = (Button) findViewById(R.id.btnadmlogin);
-        btnforgotpassword = (Button) findViewById(R.id.btnforgotpassword);
-        btnlogin = (Button) findViewById(R.id.btnLogin);
-
+        btnsignup = findViewById(R.id.btnsignup);
+        btnadmlogin = findViewById(R.id.btnadmlogin);
+        btnforgotpassword = findViewById(R.id.btnforgotpassword);
+        btnlogin = findViewById(R.id.btnLogin);
+        Email = findViewById(R.id.email);
+        Password = findViewById(R.id.password);
 
         btnadmlogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,12 +64,12 @@ public class Login extends AppCompatActivity {
         btnsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  Intent i = new Intent(getApplicationContext(),Signup.class);
+                Intent i = new Intent(getApplicationContext(),SignUp.class);
                 startActivity(i);
                 finish();
-              */
+
                 Toast.makeText(getApplicationContext(),
-                        "Signup Screen", Toast.LENGTH_SHORT)
+                        "SignUp Screen", Toast.LENGTH_SHORT)
                         .show();
             }
         });
@@ -85,78 +77,54 @@ public class Login extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button btnlogin = (Button)findViewById(R.id.btnLogin);
-                btnlogin.setClickable(false);
-                new LongRunningGetIO().execute();
-            }
-
-            class LongRunningGetIO extends AsyncTask<Void, Void, String> {
-
-                protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
-                    InputStream in = entity.getContent();
-                    StringBuffer out = new StringBuffer();
-                    int n = 1;
-                    while (n > 0) {
-                        byte[] b = new byte[4096];
-                        n = in.read(b);
-                        if (n > 0) out.append(new String(b, 0, n));
-                    }
-                    return out.toString();
-                }
-
-                @SuppressLint("WrongThread")
-                @Override
-                protected String doInBackground(Void... params) {
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpContext localContext = new BasicHttpContext();
-                    HttpGet httpGet = new HttpGet("http://dhillonds.com/leanjobsweb/index.php/api/example/users");
-                    String text = null;
-                    try {
-                        HttpResponse response = httpClient.execute(httpGet, localContext);
-                        HttpEntity entity = response.getEntity();
-                        text = getASCIIContentFromEntity(entity);
-                    } catch (Exception e) {
-                        return e.getLocalizedMessage();
-                    }
-                    return text;
-                }
-
-                protected void onPostExecute(String results) {
-                    if (results != null) {
-                        String JSONresults = results;
-                        try {
-                            JSONArray users = new JSONArray(JSONresults);
-                            EditText edEmail = (EditText) findViewById(R.id.email);
-                            EditText edPass = (EditText) findViewById(R.id.password);
-                            String em = edEmail.getText().toString();
-                            String pass = edPass.getText().toString();
-
-                            for(int i = 0; i<users.length(); i++)
-                            {
-                                JSONObject obj = users.getJSONObject(i);
-                                String email = obj.getString("email");
-                                String password = obj.getString("name");
-                                if(email.equals(em) && (password.equals(pass))){
-                                    Intent intent = new Intent(getApplicationContext(),
-                                            UserProfile.class);
-                                    startActivity(intent);
-                                    finish();
-
-                                    Toast.makeText(getApplicationContext(),
-                                            "Login successful", Toast.LENGTH_SHORT)
-                                            .show();
-                                    break;
-                                }
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    Button btnLogin = (Button) findViewById(R.id.btnLogin);
-                    btnLogin.setClickable(true);
+                try {
+                    PostSignUpData();
+                } catch (Exception ex) {
                 }
             }
         });
     }
-}
+    private void PostSignUpData() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URLPost, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject UserCredentials = new JSONObject(response);
+                    String LoginFlag = UserCredentials.getString("status");
+                    String Message = UserCredentials.getString("message");
+                    if(LoginFlag == "true"){
+                        //Toast.makeText(getApplication(),Message,Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(),
+                                UserProfile.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if(LoginFlag == "false"){
+                        Toast.makeText(getApplication(),Message,Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Exception ex){
+
+                }
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Login.this,error+"",Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                String email = Email.getText().toString();
+                String password = Password.getText().toString();
+                int Is_Admin = 0;
+                params.put("email",email);
+                params.put("password",password);
+                params.put("is_admin",String.valueOf(Is_Admin));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }}

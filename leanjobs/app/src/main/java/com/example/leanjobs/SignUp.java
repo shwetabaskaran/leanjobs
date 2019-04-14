@@ -1,12 +1,11 @@
 package com.example.leanjobs;
-
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,10 +13,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
 
 public class SignUp extends AppCompatActivity {
     EditText Email, Password, Full_Name, Phone_Num;
@@ -28,11 +27,11 @@ public class SignUp extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        Email = (EditText)findViewById(R.id.editEmail);
-        Password = (EditText) findViewById(R.id.editPassword);
-        Full_Name = (EditText) findViewById(R.id.editFullName);
-        Phone_Num = (EditText) findViewById(R.id.editMobile);
-        Submit = (Button) findViewById(R.id.Signup);
+        Email = findViewById(R.id.editEmail);
+        Password = findViewById(R.id.editPassword);
+        Full_Name = findViewById(R.id.editFullName);
+        Phone_Num = findViewById(R.id.editMobile);
+        Submit = findViewById(R.id.Signup);
 
         Submit.setOnClickListener(new Button.OnClickListener() {
 
@@ -48,17 +47,35 @@ public class SignUp extends AppCompatActivity {
 
     private void PostSignUpData() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,URLPost, new Response.Listener<String>(){
-
             @Override
             public void onResponse(String response) {
-            Toast.makeText(getApplication(),response,Toast.LENGTH_SHORT).show();
+                try{
+                    JSONObject UserCredentials = new JSONObject(response);
+                    String LoginFlag = UserCredentials.getString("status");
+                    String Message = UserCredentials.getString("message");
+                    if(LoginFlag == "true"){
+                        String SignUp = "User has been created successfully";
+                        Toast.makeText(getApplication(),SignUp,Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(),
+                                Login.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if(LoginFlag == "false"){
+                        Toast.makeText(getApplication(),Message,Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Exception ex){
+
+                }
             }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-        Toast.makeText(SignUp.this,error+"",Toast.LENGTH_SHORT).show();
-            }
-        }){
+        },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(SignUp.this,error+"",Toast.LENGTH_SHORT).show();
+                    }
+                }){
             @Override
             protected Map<String,String> getParams() throws AuthFailureError{
                 Map<String,String> params = new HashMap<String,String>();
