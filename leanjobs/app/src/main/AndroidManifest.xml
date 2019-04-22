@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.leanjobs">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <permission android:name="android.permission.CAMERA"></permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,11 @@
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
-        <activity android:name=".QuestionnaireResponse"></activity>
+        <activity android:name=".Admin_HomeScreen"></activity>
+        <activity android:name=".User_HomeScreen" />
+        <activity android:name=".AboutUs" />
+        <activity android:name=".Settings" />
+        <activity android:name=".QuestionnaireResponse" />
         <activity
             android:name=".ApplicantDetails"
             android:exported="true" />
@@ -19,9 +23,11 @@
         <activity android:name=".ViewMyApplications" />
         <activity android:name=".ApplicationForm" />
         <activity android:name=".UserJobDetails" />
-        <activity android:name=".UserProfile" android:exported="true"  />
+        <activity android:name=".UserProfile" />
         <activity android:name=".AdminProfile" />
-        <activity android:name=".SignUp" android:exported="true"/>
+        <activity
+            android:name=".SignUp"
+            android:exported="true" />
         <activity
             android:name=".AdminLogin"
             android:label="@string/title_activity_admin_login"
