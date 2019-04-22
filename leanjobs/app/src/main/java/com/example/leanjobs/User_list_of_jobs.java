@@ -30,7 +30,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class User_list_of_jobs extends ListActivity implements AsyncResponse {
-
+    public int id = 8;
+    public int page = 0;
     UserJobsAdapter adapter;
 
     @Override
@@ -61,7 +62,6 @@ public class User_list_of_jobs extends ListActivity implements AsyncResponse {
     }
 
     public void onResume(){
-
         super.onResume();
         LongRunningGetIO asyncTask =new LongRunningGetIO();
         asyncTask.delegate = this;
@@ -70,7 +70,9 @@ public class User_list_of_jobs extends ListActivity implements AsyncResponse {
 }
 
 class LongRunningGetIO extends AsyncTask<Void, Void, String> {
+
     public AsyncResponse delegate = null;
+    User_list_of_jobs obj = new User_list_of_jobs();
 
     protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
         InputStream in = entity.getContent();
@@ -88,7 +90,8 @@ class LongRunningGetIO extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
         HttpClient httpClient = new DefaultHttpClient();
         HttpContext localContext = new BasicHttpContext();
-        HttpGet httpGet = new HttpGet("http://dhillonds.com/leanjobsweb/index.php/api/jobs/list_user?page=0&user_id=8");
+        String url = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/list_user?page="+obj.page+"&user_id="+obj.id;
+        HttpGet httpGet = new HttpGet(url);
         String text = null;
         try {
             HttpResponse response = httpClient.execute(httpGet, localContext);
