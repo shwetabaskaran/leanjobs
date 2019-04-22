@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
-        <activity android:name=".Admin_HomeScreen"></activity>
+        <activity android:name=".User_list_of_jobs" />
+        <activity android:name=".Admin_HomeScreen" />
         <activity android:name=".User_HomeScreen" />
         <activity android:name=".AboutUs" />
         <activity android:name=".Settings" />

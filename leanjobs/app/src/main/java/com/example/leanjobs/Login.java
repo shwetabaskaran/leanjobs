@@ -113,7 +113,7 @@ public class Login extends AppCompatActivity {
                    // Toast.makeText(getApplication(),getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("salt","").toString(),Toast.LENGTH_SHORT).show()
 
                         Intent intent = new Intent(getApplicationContext(),
-                                UserProfile.class);
+                                User_HomeScreen.class);
 
                         startActivity(intent);
                         finish();
