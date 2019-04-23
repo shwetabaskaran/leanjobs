@@ -34,6 +34,8 @@ public class UserJobsAdapter extends ArrayAdapter<Job> {
             jobTitle.setText(job.getjobTitle());
             TextView jobDesc = (TextView) v.findViewById(R.id.UserJobListDesc);
             jobDesc.setText(job.getJobRoleDesc());
+            TextView jobWages = (TextView) v.findViewById(R.id.UserJobListWages);
+            jobWages.setText(job.getJobWages());
 
         } catch (Exception e) {
             e.printStackTrace();

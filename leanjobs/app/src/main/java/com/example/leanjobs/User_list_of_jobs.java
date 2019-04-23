@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -106,8 +107,6 @@ class LongRunningGetIO extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String results) {
         if (results != null) {
             ArrayList<Job> joblist = new ArrayList<Job>();
-
-            Log.d("RESULT",results);
 
             try {
                 JSONObject jobj=new JSONObject(results);
