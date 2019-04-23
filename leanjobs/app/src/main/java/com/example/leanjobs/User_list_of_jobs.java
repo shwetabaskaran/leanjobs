@@ -53,7 +53,7 @@ public class User_list_of_jobs extends ListActivity implements AsyncResponse {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
                     Job selectedJob  = jobs.get(position);
-                        Intent intent = new Intent(User_list_of_jobs.this, UserJobDetails.class);
+                    Intent intent = new Intent(User_list_of_jobs.this, UserJobDetails.class);
                         intent.putExtra("jobid", selectedJob.getJobID());
                         startActivity(intent);
                 }
@@ -105,9 +105,8 @@ class LongRunningGetIO extends AsyncTask<Void, Void, String> {
 
     protected void onPostExecute(String results) {
         if (results != null) {
-            String JSONresults = results;
             ArrayList<Job> joblist = new ArrayList<Job>();
-            Job joba = new Job();
+
             Log.d("RESULT",results);
 
             try {
@@ -116,18 +115,22 @@ class LongRunningGetIO extends AsyncTask<Void, Void, String> {
                 JSONArray jobs = new JSONArray(c);
 
                 for(int i = 0; i<jobs.length(); i++) {
+                    Job joba = new Job();
                     int jobid = jobs.getJSONObject(i).getInt("job_id");
                     String jobtitle = jobs.getJSONObject(i).getString("title");
-                    String jobdesc = jobs.getJSONObject(i).getString("wages");
+                    String jobdesc = jobs.getJSONObject(i).getString("role_desc");
+                    String jobwages = jobs.getJSONObject(i).getString("wages");
                     joba.setJobID(jobid);
                     joba.setJobTitle(jobtitle);
                     joba.setJobRoleDesc(jobdesc);
+                    joba.setJobWages(jobwages);
                     joblist.add(joba);
                 }
             }
             catch (JSONException e) {
                 e.printStackTrace();
             }
+
             delegate.processFinish(joblist);
         }
     }
