@@ -114,7 +114,7 @@ public class Login extends AppCompatActivity {
 
                         Intent intent = new Intent(getApplicationContext(),
                                 User_HomeScreen.class);
-
+                        intent.putExtra("userid",User_ID);
                         startActivity(intent);
                         finish();
                     }
