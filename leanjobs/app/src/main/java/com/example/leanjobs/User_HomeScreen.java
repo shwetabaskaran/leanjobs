@@ -8,36 +8,51 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class User_HomeScreen extends AppCompatActivity {
-    String UserId;
+    String UserId, FullName, Email, PhoneNo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user__home_screen);
         Intent intent = getIntent();
         UserId = intent.getStringExtra("userid");
-//                Toast.makeText(getApplicationContext(),
-//                UserId, Toast.LENGTH_LONG)
-//                .show();
-
+        FullName = intent.getStringExtra("FullName");
+        Email = intent.getStringExtra("email");
+        PhoneNo = intent.getStringExtra("phoneNo");
+        TextView TxtUserHome = (TextView) findViewById(R.id.TxtUserHomeView);
+        TxtUserHome.setText("Welcome "+FullName);
         jobs();
         logout();
+        profile();
+    }
+
+    private void profile() {
+        Button job = (Button) findViewById(R.id.btnUserProfile);
+        job.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),
+                        UserProfile.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     private void logout() {
         Button logout = (Button) findViewById(R.id.btnLogout);
-        SharedPreferences LoginDetails = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE);
-        LoginDetails.edit().clear().commit();
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences LoginDetails = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE);
+                LoginDetails.edit().clear().commit();
                 Intent i = new Intent(getApplicationContext(),
                         Login.class);
                 startActivity(i);
                 finish();
-
                 Toast.makeText(getApplicationContext(),
                         "User Logged out successfully", Toast.LENGTH_LONG)
                         .show();

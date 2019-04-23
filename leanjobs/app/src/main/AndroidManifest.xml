@@ -24,7 +24,7 @@
         <activity android:name=".ViewMyApplications" />
         <activity android:name=".ApplicationForm" />
         <activity android:name=".UserJobDetails" />
-        <activity android:name=".UserProfile" />
+        <activity android:name=".UserProfile" android:parentActivityName=".User_HomeScreen"/>
         <activity android:name=".AdminProfile" />
         <activity
             android:name=".SignUp"

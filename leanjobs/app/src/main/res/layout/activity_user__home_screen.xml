@@ -20,11 +20,11 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/TxtUserHomeView"
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:textColor="@color/btn_login"
                     android:layout_height="match_parent"
-                    android:text="Hello User"/>
+                    android:gravity="center"
+                    android:textColor="@color/btn_login" />
 
                 
             </RelativeLayout>
@@ -84,15 +84,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
+
                 <Button
+                    android:id="@+id/btnUserProfile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/button5"
                     android:background="@drawable/right_buttom_btn_line"
-                    android:text="profile"
-                    android:textSize="18sp"
                     android:gravity="center|bottom"
-                    android:paddingBottom="10dp"/>
+                    android:paddingBottom="10dp"
+                    android:text="profile"
+                    android:textSize="18sp" />
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

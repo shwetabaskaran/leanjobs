@@ -18,6 +18,7 @@
             android:id="@+id/userprofilePic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:shape="ring"
             android:background="@drawable/user"/>
 
         <ImageButton

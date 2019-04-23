@@ -110,11 +110,10 @@ public class Login extends AppCompatActivity {
                     String Full_Name = Data.getString("full_name");
                     getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("full_name", Full_Name).commit();
 
-                   // Toast.makeText(getApplication(),getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("salt","").toString(),Toast.LENGTH_SHORT).show()
-
                         Intent intent = new Intent(getApplicationContext(),
                                 User_HomeScreen.class);
                         intent.putExtra("userid",User_ID);
+                        intent.putExtra("FullName",Full_Name);
                         startActivity(intent);
                         finish();
                     }

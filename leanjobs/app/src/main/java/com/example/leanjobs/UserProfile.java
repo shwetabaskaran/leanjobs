@@ -10,8 +10,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,6 +57,10 @@ public class UserProfile extends AppCompatActivity {
 
         emailAddress.setEnabled(false);
         UploadPDF = (Button) findViewById(R.id.userprofileUploadResume);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         initImageButton();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +82,16 @@ public class UserProfile extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
             }
         });
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
