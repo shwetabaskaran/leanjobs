@@ -1,19 +1,13 @@
 package com.example.leanjobs;
 
-import android.app.Application;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -30,21 +24,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class User_list_of_jobs extends ListActivity implements AsyncResponse {
-    public int id = 8;
+public class Admin_list_of_jobs extends ListActivity implements AsyncResponseAdminJoblist {
+
     public int page = 0;
-    UserJobsAdapter adapter;
+    AdminJobsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list_of_jobs);
+        setContentView(R.layout.activity_admin_list_of_jobs);
+    }
+
+    public void onResume(){
+        super.onResume();
+        AsyncAdminjoblist asyncTask =new AsyncAdminjoblist();
+        asyncTask.delegate = this;
+        asyncTask.execute();
     }
 
     @Override
-    public void processFinish(final ArrayList<Job> jobs) {
+    public void processFinishAdminJobList(final ArrayList<Job> jobs) {
 
-        adapter = new UserJobsAdapter(this, jobs);
+        adapter = new AdminJobsAdapter(this, jobs);
         setListAdapter(adapter);
 
         if (jobs.size() > 0) {
@@ -54,26 +55,20 @@ public class User_list_of_jobs extends ListActivity implements AsyncResponse {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
                     Job selectedJob  = jobs.get(position);
-                    Intent intent = new Intent(User_list_of_jobs.this, UserJobDetails.class);
-                        intent.putExtra("jobid", selectedJob.getJobID());
-                        startActivity(intent);
+                    Intent intent = new Intent(Admin_list_of_jobs.this, Admin_job_details.class);
+                    intent.putExtra("jobid", selectedJob.getJobID());
+                    startActivity(intent);
                 }
             });
         }
     }
 
-    public void onResume(){
-        super.onResume();
-        LongRunningGetIO asyncTask =new LongRunningGetIO();
-        asyncTask.delegate = this;
-        asyncTask.execute();
-    }
 }
 
-class LongRunningGetIO extends AsyncTask<Void, Void, String> {
+class AsyncAdminjoblist extends AsyncTask<Void, Void, String> {
 
-    public AsyncResponse delegate = null;
-    User_list_of_jobs obj = new User_list_of_jobs();
+    public AsyncResponseAdminJoblist delegate = null;
+    Admin_list_of_jobs obj = new Admin_list_of_jobs();
 
     protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
         InputStream in = entity.getContent();
@@ -91,7 +86,7 @@ class LongRunningGetIO extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
         HttpClient httpClient = new DefaultHttpClient();
         HttpContext localContext = new BasicHttpContext();
-        String url = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/list_user?page="+obj.page+"&user_id="+obj.id;
+        String url = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/list_admin?page="+obj.page;
         HttpGet httpGet = new HttpGet(url);
         String text = null;
         try {
@@ -116,25 +111,21 @@ class LongRunningGetIO extends AsyncTask<Void, Void, String> {
                 for(int i = 0; i<jobs.length(); i++) {
                     Job joba = new Job();
                     int jobid = jobs.getJSONObject(i).getInt("job_id");
-                    Boolean canApply = jobs.getJSONObject(i).getBoolean("can_apply");
-                    if(canApply == true)
-                    {
-                        String jobtitle = jobs.getJSONObject(i).getString("title");
-                        String jobdesc = jobs.getJSONObject(i).getString("role_desc");
-                        String jobwages = jobs.getJSONObject(i).getString("wages");
-                        joba.setJobID(jobid);
-                        joba.setJobTitle(jobtitle);
-                        joba.setJobRoleDesc(jobdesc);
-                        joba.setJobWages(jobwages);
-                        joblist.add(joba);
-                    }
+                    String jobtitle = jobs.getJSONObject(i).getString("title");
+                    String jobdesc = jobs.getJSONObject(i).getString("role_desc");
+                    String jobwages = jobs.getJSONObject(i).getString("wages");
+                    joba.setJobID(jobid);
+                    joba.setJobTitle(jobtitle);
+                    joba.setJobRoleDesc(jobdesc);
+                    joba.setJobWages(jobwages);
+                    joblist.add(joba);
                 }
             }
             catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            delegate.processFinish(joblist);
+            delegate.processFinishAdminJobList(joblist);
         }
     }
 
