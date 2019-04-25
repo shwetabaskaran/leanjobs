@@ -17,6 +17,11 @@ public class Admin_HomeScreen extends AppCompatActivity {
         jobs();
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+    }
+
     public void jobs(){
         Button job = (Button) findViewById(R.id.button3);
         job.setOnClickListener(new View.OnClickListener() {

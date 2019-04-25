@@ -1,5 +1,6 @@
 package com.example.leanjobs;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +47,18 @@ public class AdminLogin extends AppCompatActivity {
                 }
             }
         });
+        try{
+            android.support.v7.app.ActionBar actionBar =getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }catch (Exception ex){
+            Toast.makeText(getApplication(),ex.toString(),Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), Login.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
     private void PostSignUpData() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,URLPost, new Response.Listener<String>(){
