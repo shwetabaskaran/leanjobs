@@ -138,7 +138,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="1dp"
         android:ems="15"
-        android:hint="Quetion 1"
+        android:hint="Question 1"
         android:imeOptions="actionNext">
 
     </EditText>
@@ -154,7 +154,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-1dp"
         android:ems="15"
-        android:hint="Quetion 2"
+        android:hint="Question 2"
         android:imeOptions="actionNext">
 
     </EditText>
@@ -170,7 +170,7 @@
         android:layout_marginLeft="9dp"
         android:layout_marginTop="0dp"
         android:ems="15"
-        android:hint="Quetion 3"
+        android:hint="Question 3"
         android:imeOptions="actionNext" />
 
     <EditText
@@ -184,7 +184,7 @@
         android:layout_marginLeft="9dp"
         android:layout_marginTop="0dp"
         android:ems="15"
-        android:hint="Quetion 4"
+        android:hint="Question 4"
         android:imeOptions="actionNext" />
 
     <EditText
@@ -198,7 +198,7 @@
         android:layout_marginLeft="9dp"
         android:layout_marginTop="0dp"
         android:ems="15"
-        android:hint="Quetion 5"
+        android:hint="Question 5"
         android:imeOptions="actionNext">
 
     </EditText>
