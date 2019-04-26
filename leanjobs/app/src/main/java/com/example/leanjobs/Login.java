@@ -100,20 +100,28 @@ public class Login extends AppCompatActivity {
                     if(LoginFlag == "true"){
                     JSONObject Data = UserCredentials.getJSONObject("data");
                     String Salt = Data.getString("salt");
-                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("salt", Salt).commit();
                     String User_ID = Data.getString("user_id");
-                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("user_id", User_ID).commit();
                     String Email = Data.getString("email");
-                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("email", Email).commit();
                     String Phone_num = Data.getString("phone_num");
-                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("phone_num", Phone_num).commit();
                     String Full_Name = Data.getString("full_name");
-                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("full_name", Full_Name).commit();
+//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("salt", Salt).commit();
+//                    String User_ID = Data.getString("user_id");
+//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("user_id", User_ID).commit();
+//                    String Email = Data.getString("email");
+//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("email", Email).commit();
+//                    String Phone_num = Data.getString("phone_num");
+//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("phone_num", Phone_num).commit();
+//                    String Full_Name = Data.getString("full_name");
+//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("full_name", Full_Name).commit();
 
                         Intent intent = new Intent(getApplicationContext(),
                                 User_HomeScreen.class);
                         intent.putExtra("userid",User_ID);
                         intent.putExtra("FullName",Full_Name);
+                        intent.putExtra("email",Email);
+                        intent.putExtra("phoneNo",Phone_num);
+                        intent.putExtra("salt",Salt);
+
                         startActivity(intent);
                         finish();
                     }

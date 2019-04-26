@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -33,6 +36,25 @@ public class Admin_list_of_jobs extends ListActivity implements AsyncResponseAdm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_list_of_jobs);
+        try{
+        CreateJob();}
+        catch (Exception ex)
+        {
+            Toast.makeText(getApplication(),ex.toString(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void CreateJob() {
+        ImageButton CreateJob = (ImageButton) findViewById(R.id.createButton);
+        CreateJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),
+                        createJob.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void onResume(){

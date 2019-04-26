@@ -37,6 +37,7 @@ import java.util.Map;
 public class UserProfile extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView ProfilePic;
+    String FullName,PhoneNo,Salt,UserId,Email;
     final int PERMISSION_REQUEST_CAMERA = 103;
     Button btnSave,UploadPDF;
     EditText fullName,emailAddress,mobileNumber;
@@ -50,10 +51,30 @@ public class UserProfile extends AppCompatActivity {
         emailAddress = findViewById(R.id.edituserEmail);
         mobileNumber = findViewById(R.id.edituserMobile);
         this.ProfilePic = (ImageView)this.findViewById(R.id.userprofilePic);
+        Intent i = getIntent();
+        if(i.hasExtra("User_User_id"))
+        {
+            FullName = i.getStringExtra("User_FullName");
+            PhoneNo = i.getStringExtra("User_PhoneNo");
+            Email = i.getStringExtra("User_Email");
+            Salt = i.getStringExtra("User_Salt");
+            fullName.setText(FullName);
+            mobileNumber.setText(PhoneNo);
+            emailAddress.setText(Email);
+        }
+        else if(i.hasExtra("Admin_User_id")){
+            FullName = i.getStringExtra("Admin_FullName");
+            PhoneNo = i.getStringExtra("Admin_PhoneNo");
+            Email = i.getStringExtra("Admin_Email");
+            Salt = i.getStringExtra("Admin_Salt");
+            fullName.setText(FullName);
+            mobileNumber.setText(PhoneNo);
+            emailAddress.setText(Email);
+        }
 
-        fullName.setText(getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("full_name",""));
-        mobileNumber.setText(getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("phone_num",""));
-        emailAddress.setText(getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("email",""));
+//        fullName.setText(getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("full_name",""));
+//        mobileNumber.setText(getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("phone_num",""));
+//        emailAddress.setText(getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("email",""));
 
         emailAddress.setEnabled(false);
         UploadPDF = (Button) findViewById(R.id.userprofileUploadResume);
@@ -192,13 +213,13 @@ public class UserProfile extends AppCompatActivity {
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
-                String FullName = fullName.getText().toString();
-                String EmailAddress = emailAddress.getText().toString();
-                String Mobileno = mobileNumber.getText().toString();
-                String Salt = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("salt","");
+//                String FullName = fullName.getText().toString();
+//                String EmailAddress = emailAddress.getText().toString();
+//                String Mobileno = mobileNumber.getText().toString();
+//                String Salt = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("salt","");
                 String User_Id = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("user_id","");
                 params.put("full_name",FullName);
-                params.put("phone_num",Mobileno);
+                params.put("phone_num",PhoneNo);
                 params.put("salt",Salt);
                 params.put("user_id",User_Id);
                 return params;
