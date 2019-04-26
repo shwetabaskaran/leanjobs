@@ -50,7 +50,7 @@ public class createJob extends AppCompatActivity {
         Question3 = findViewById(R.id.editQuestions3);
         Question4 = findViewById(R.id.editQuestions4);
         Question5 = findViewById(R.id.editQuestions5);
-        TxtJobReq = findViewById(R.id.TxtJobReq);
+        TxtJobReq = findViewById(R.id.JobReq);
         submit = findViewById(R.id.submitbutton);
         cancel = findViewById(R.id.cancelbutton);
         User_Id = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("user_id","");
