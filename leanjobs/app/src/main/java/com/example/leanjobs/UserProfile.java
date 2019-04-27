@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +43,8 @@ public class UserProfile extends AppCompatActivity {
     final int PERMISSION_REQUEST_CAMERA = 103;
     Button btnSave,UploadPDF;
     EditText fullName,emailAddress,mobileNumber;
+    String imageString;
+    private Bitmap scaledPhoto;
     String URLPost="http://dhillonds.com/leanjobsweb/index.php/api/users/update_profile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,9 +158,9 @@ public class UserProfile extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 try {
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    Bitmap scaledPhoto = Bitmap.createScaledBitmap(photo, 144, 144, true);
+                    scaledPhoto = Bitmap.createScaledBitmap(photo, 144, 144, true);
                     ProfilePic.setImageBitmap(scaledPhoto);
-
+                    ImageToString(scaledPhoto);
                 }
                 catch (Exception ex){
                     Toast.makeText(UserProfile.this, ex.toString(), Toast.LENGTH_LONG).show();
@@ -165,6 +169,12 @@ public class UserProfile extends AppCompatActivity {
         }
     }
 
+    private String ImageToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        byte[] imgBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgBytes,Base64.DEFAULT);
+    }
 
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
@@ -213,15 +223,13 @@ public class UserProfile extends AppCompatActivity {
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
-//                String FullName = fullName.getText().toString();
-//                String EmailAddress = emailAddress.getText().toString();
-//                String Mobileno = mobileNumber.getText().toString();
-//                String Salt = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("salt","");
                 String User_Id = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("user_id","");
                 params.put("full_name",FullName);
                 params.put("phone_num",PhoneNo);
                 params.put("salt",Salt);
                 params.put("user_id",User_Id);
+                if(scaledPhoto != null){
+                params.put("picture_file",ImageToString(scaledPhoto));}
                 return params;
             }
         };
