@@ -105,17 +105,8 @@ public class Login extends AppCompatActivity {
                     String Phone_num = Data.getString("phone_num");
                     String Full_Name = Data.getString("full_name");
                     String ProfilePicURL = Data.getString("profile_pic_path");
-//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("salt", Salt).commit();
-//                    String User_ID = Data.getString("user_id");
-//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("user_id", User_ID).commit();
-//                    String Email = Data.getString("email");
-//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("email", Email).commit();
-//                    String Phone_num = Data.getString("phone_num");
-//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("phone_num", Phone_num).commit();
-//                    String Full_Name = Data.getString("full_name");
-//                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("full_name", Full_Name).commit();
-
-                        Intent intent = new Intent(getApplicationContext(),
+                    String ResumePath = Data.getString("resume_path");
+                    Intent intent = new Intent(getApplicationContext(),
                                 User_HomeScreen.class);
                         intent.putExtra("userid",User_ID);
                         intent.putExtra("FullName",Full_Name);
@@ -123,6 +114,7 @@ public class Login extends AppCompatActivity {
                         intent.putExtra("phoneNo",Phone_num);
                         intent.putExtra("salt",Salt);
                         intent.putExtra("profilePicURL",ProfilePicURL);
+                        intent.putExtra("resumePath",ResumePath);
 
                         startActivity(intent);
                         finish();

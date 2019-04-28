@@ -1,7 +1,6 @@
 package com.example.leanjobs;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -25,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -34,37 +32,31 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import net.gotev.uploadservice.MultipartUploadRequest;
-import net.gotev.uploadservice.UploadNotificationConfig;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class UserProfile extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
-    String PDFPathandFile ;
+    byte[] PDFbytesArray;
     private ImageView ProfilePic;
+    String ResumePath;
     TextView PdfNameEditText ;
     String FullName,PhoneNo,Salt,UserId,Email,ProfilePicURL;
     final int PERMISSION_REQUEST_CAMERA = 103;
     Button btnSave,UploadPDF;
     EditText fullName,emailAddress,mobileNumber;
-    String imageString;
+    Button ViewResume;
     Uri uri;
     public int PDF_REQ_CODE = 1;
     private Bitmap scaledPhoto;
@@ -80,7 +72,7 @@ public class UserProfile extends AppCompatActivity {
         emailAddress = findViewById(R.id.edituserEmail);
         mobileNumber = findViewById(R.id.edituserMobile);
         PdfNameEditText = findViewById(R.id.txtPdfName);
-
+        ViewResume = findViewById(R.id.btnViewResume);
         this.ProfilePic = (ImageView)this.findViewById(R.id.userprofilePic);
 
 
@@ -88,7 +80,7 @@ public class UserProfile extends AppCompatActivity {
         //ProfilePicURL = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("profilePicURL","");
 
         ProfilePicURL = i.getStringExtra("User_ProfileURL");
-        Toast.makeText(UserProfile.this, ProfilePicURL, Toast.LENGTH_LONG).show();
+        ResumePath = i.getStringExtra("User_ResumePath");
         if(i.hasExtra("User_User_id"))
         {
             FullName = i.getStringExtra("User_FullName");
@@ -130,6 +122,18 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
+        ViewResume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               try{ String URL=ResumePath;
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
+                startActivity(browserIntent);}
+                catch (Exception ex){
+                    Toast.makeText(UserProfile.this, "No Resume Available", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         UploadPDF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -146,12 +150,9 @@ public class UserProfile extends AppCompatActivity {
         });
     }
 
-
-
     private void CheckProfilePicture() {
         try{
         String CheckURL = ProfilePicURL;
-        Toast.makeText(UserProfile.this, CheckURL, Toast.LENGTH_LONG).show();
         ImageRequest request = new ImageRequest(CheckURL,
                 new Response.Listener<Bitmap>() {
                     @Override
@@ -162,12 +163,6 @@ public class UserProfile extends AppCompatActivity {
                 new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
                     }
-//                    protected Map<String, String> getParams() {
-//                        Map<String, String> params = new HashMap<>();
-//                        params.put("email", Email);
-//                        params.put("password", "asfasfas");
-//                        params.put("is_admin", "0");
-//                        return params;
 
                 });
         VolleySingleton.getInstance(this).addToRequestQueue(request);}
@@ -236,21 +231,27 @@ public class UserProfile extends AppCompatActivity {
             }
         }
         else  if(requestCode == PDF_REQ_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
-            Toast.makeText(UserProfile.this, ""+filePath, Toast.LENGTH_SHORT).show();
-            byte[] dataArr = null;
-            File files = new File(String.valueOf(filePath));
+            Uri uri = data.getData();
+            File file = new File(uri.getPath());
 
             try {
+                InputStream is = this.getContentResolver().openInputStream(uri);
+                PDFbytesArray = new byte[is.available()];
+                is.read(PDFbytesArray);
+                Toast.makeText(UserProfile.this, PDFbytesArray.toString(), Toast.LENGTH_LONG).show();
+                //write to sdcard
+            /*
+            File myPdf=new File(Environment.getExternalStorageDirectory(), "myPdf.pdf");
+            FileOutputStream fos=new FileOutputStream(myPdf.getPath());
+            fos.write(bytesArray);
+            fos.close();*/
 
-                dataArr = FileUtils.readFileToByteArray(files);
 
-            } catch (IOException e) {
-
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
-
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            PDFPathandFile = Base64.encodeToString(dataArr, Base64.DEFAULT);
 
         }
     }
@@ -283,7 +284,8 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
-                Toast.makeText(UserProfile.this, resultResponse, Toast.LENGTH_LONG).show();
+                Toast.makeText(UserProfile.this, response.toString(), Toast.LENGTH_LONG).show();
+
                 try {
                     JSONObject result = new JSONObject(resultResponse);
                     String status = result.getString("status");
@@ -302,45 +304,14 @@ public class UserProfile extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                NetworkResponse networkResponse = error.networkResponse;
-                String errorMessage = "Unknown error";
-                if (networkResponse == null) {
-                    if (error.getClass().equals(TimeoutError.class)) {
-                        errorMessage = "Request timeout";
-                    } else if (error.getClass().equals(NoConnectionError.class)) {
-                        errorMessage = "Failed to connect server";
-                    }
-                } else {
-                    String result = new String(networkResponse.data);
-                    try {
-                        JSONObject response = new JSONObject(result);
-                        String status = response.getString("status");
-                        String message = response.getString("message");
 
-                        Log.e("Error Status", status);
-                        Log.e("Error Message", message);
+                Toast.makeText(UserProfile.this, error.toString(), Toast.LENGTH_LONG).show();
 
-                        if (networkResponse.statusCode == 404) {
-                            errorMessage = "Resource not found";
-                        } else if (networkResponse.statusCode == 401) {
-                            errorMessage = message+" Please login again";
-                        } else if (networkResponse.statusCode == 400) {
-                            errorMessage = message+ " Check your inputs";
-                        } else if (networkResponse.statusCode == 500) {
-                            errorMessage = message+" Something is getting wrong";
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.i("Error", errorMessage);
-                error.printStackTrace();
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                //params.put("api_token", "gh659gjhvdyudo973823tt9gvjf7i6ric75r76");
                 params.put("full_name", fullName.getText().toString());
                 params.put("phone_num", mobileNumber.getText().toString());
                 params.put("salt", Salt);
@@ -350,16 +321,12 @@ public class UserProfile extends AppCompatActivity {
 
             @Override
             protected Map<String, DataPart> getByteData() {
-
                 Map<String, DataPart> params = new HashMap<>();
-
-                params.put("picture_file", new DataPart(FullName + "TestImage.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), ProfilePic.getDrawable()), "image/jpeg"));
-                //params.put("resume_file", new DataPart("file_cover.jpg", PDFPathandFile, "pdf"));
-
+                params.put("picture_file", new DataPart(FullName + " ProfilePic.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), ProfilePic.getDrawable()), "image/jpeg"));
+                params.put("resume_file", new DataPart(FullName+" Resume.pdf", PDFbytesArray, "pdf"));
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
     }
 }
