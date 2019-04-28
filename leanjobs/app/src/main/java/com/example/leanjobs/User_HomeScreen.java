@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class User_HomeScreen extends AppCompatActivity {
-    String UserId, FullName, Email, PhoneNo,Salt;
+    String UserId, FullName, Email, PhoneNo,Salt,UserPicURL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +23,7 @@ public class User_HomeScreen extends AppCompatActivity {
         Email = intent.getStringExtra("email");
         PhoneNo = intent.getStringExtra("phoneNo");
         Salt = intent.getStringExtra("salt");
-
+        UserPicURL = intent.getStringExtra("profilePicURL");
         TextView TxtUserHome = (TextView) findViewById(R.id.TxtUserHomeView);
         TxtUserHome.setText("Welcome "+FullName);
         jobs();
@@ -44,6 +44,7 @@ public class User_HomeScreen extends AppCompatActivity {
                 UserBundle.putString("User_PhoneNo",PhoneNo);
                 UserBundle.putString("User_Salt",Salt);
                 UserBundle.putString("User_Email",Email);
+                UserBundle.putString("User_ProfileURL",UserPicURL);
                 i.putExtras(UserBundle);
                 startActivity(i);
                 finish();

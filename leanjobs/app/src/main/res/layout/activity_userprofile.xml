@@ -160,5 +160,14 @@
             android:layout_below="@+id/userprofileUploadResume"
             android:text="Save" />
 
+        <TextView
+            android:id="@+id/txtPdfName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="313dp" />
+
     </RelativeLayout>
 </RelativeLayout>

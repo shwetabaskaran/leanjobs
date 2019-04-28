@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -14,37 +15,61 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
+
+import org.apache.commons.io.FileUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class UserProfile extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
+    String PDFPathandFile ;
     private ImageView ProfilePic;
-    String FullName,PhoneNo,Salt,UserId,Email;
+    TextView PdfNameEditText ;
+    String FullName,PhoneNo,Salt,UserId,Email,ProfilePicURL;
     final int PERMISSION_REQUEST_CAMERA = 103;
     Button btnSave,UploadPDF;
     EditText fullName,emailAddress,mobileNumber;
     String imageString;
+    Uri uri;
+    public int PDF_REQ_CODE = 1;
     private Bitmap scaledPhoto;
+    File file;String filename;
+    String PdfNameHolder, PdfPathHolder, PdfID;
     String URLPost="http://dhillonds.com/leanjobsweb/index.php/api/users/update_profile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +79,24 @@ public class UserProfile extends AppCompatActivity {
         fullName = findViewById(R.id.edituserFullName);
         emailAddress = findViewById(R.id.edituserEmail);
         mobileNumber = findViewById(R.id.edituserMobile);
+        PdfNameEditText = findViewById(R.id.txtPdfName);
+
         this.ProfilePic = (ImageView)this.findViewById(R.id.userprofilePic);
+
+
         Intent i = getIntent();
+        //ProfilePicURL = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("profilePicURL","");
+
+        ProfilePicURL = i.getStringExtra("User_ProfileURL");
+        Toast.makeText(UserProfile.this, ProfilePicURL, Toast.LENGTH_LONG).show();
         if(i.hasExtra("User_User_id"))
         {
             FullName = i.getStringExtra("User_FullName");
             PhoneNo = i.getStringExtra("User_PhoneNo");
             Email = i.getStringExtra("User_Email");
             Salt = i.getStringExtra("User_Salt");
+            UserId = i.getStringExtra("User_User_id");
+
             fullName.setText(FullName);
             mobileNumber.setText(PhoneNo);
             emailAddress.setText(Email);
@@ -71,15 +106,12 @@ public class UserProfile extends AppCompatActivity {
             PhoneNo = i.getStringExtra("Admin_PhoneNo");
             Email = i.getStringExtra("Admin_Email");
             Salt = i.getStringExtra("Admin_Salt");
+            UserId = i.getStringExtra("Admin_User_id");
             fullName.setText(FullName);
             mobileNumber.setText(PhoneNo);
             emailAddress.setText(Email);
         }
-
-//        fullName.setText(getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("full_name",""));
-//        mobileNumber.setText(getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("phone_num",""));
-//        emailAddress.setText(getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("email",""));
-
+        CheckProfilePicture();
         emailAddress.setEnabled(false);
         UploadPDF = (Button) findViewById(R.id.userprofileUploadResume);
         ActionBar actionBar = getSupportActionBar();
@@ -102,11 +134,47 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent();
+
                 intent.setType("application/pdf");
+
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select PDF"), 1);
+
+                startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQ_CODE);
+
+
             }
         });
+    }
+
+
+
+    private void CheckProfilePicture() {
+        try{
+        String CheckURL = ProfilePicURL;
+        Toast.makeText(UserProfile.this, CheckURL, Toast.LENGTH_LONG).show();
+        ImageRequest request = new ImageRequest(CheckURL,
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap bitmap) {
+                        ProfilePic.setImageBitmap(bitmap);
+                    }
+                }, 0, 0, null,
+                new Response.ErrorListener() {
+                    public void onErrorResponse(VolleyError error) {
+                    }
+//                    protected Map<String, String> getParams() {
+//                        Map<String, String> params = new HashMap<>();
+//                        params.put("email", Email);
+//                        params.put("password", "asfasfas");
+//                        params.put("is_admin", "0");
+//                        return params;
+
+                });
+        VolleySingleton.getInstance(this).addToRequestQueue(request);}
+        catch (Exception ex){
+            Toast.makeText(UserProfile.this, ex.toString(), Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
@@ -167,7 +235,26 @@ public class UserProfile extends AppCompatActivity {
                 }
             }
         }
+        else  if(requestCode == PDF_REQ_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            Toast.makeText(UserProfile.this, ""+filePath, Toast.LENGTH_SHORT).show();
+            byte[] dataArr = null;
+            File files = new File(String.valueOf(filePath));
+
+            try {
+
+                dataArr = FileUtils.readFileToByteArray(files);
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+            PDFPathandFile = Base64.encodeToString(dataArr, Base64.DEFAULT);
+
+        }
     }
+
 
     private String ImageToString(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -185,55 +272,94 @@ public class UserProfile extends AppCompatActivity {
                 } else {
                     Toast.makeText(UserProfile.this, "You will not be able to save contact pictures from this app", Toast.LENGTH_LONG).show();
                 }
+
             }
         }
     }
 
     private void PostSignUpData() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,URLPost, new Response.Listener<String>(){
+        //StringRequest stringRequest = new StringRequest(Request.Method.POST,URLPost, new Response.Listener<String>(){
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, URLPost, new Response.Listener<NetworkResponse>() {
             @Override
-            public void onResponse(String response) {
-                try{
-                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("phone_num", mobileNumber.getText().toString()).commit();
-                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("full_name", fullName.getText().toString()).commit();
-                    JSONObject UserProfileData = new JSONObject(response);
-                    String LoginFlag = UserProfileData.getString("status");
-                    String Message = UserProfileData.getString("message");
-                    Toast.makeText(getApplication(),response,Toast.LENGTH_SHORT).show();
-                    if(LoginFlag == "true"){
-                        Intent intent = new Intent(getApplicationContext(),
-                                UserProfile.class);
-                        startActivity(intent);
-                        finish();
+            public void onResponse(NetworkResponse response) {
+                String resultResponse = new String(response.data);
+                Toast.makeText(UserProfile.this, resultResponse, Toast.LENGTH_LONG).show();
+                try {
+                    JSONObject result = new JSONObject(resultResponse);
+                    String status = result.getString("status");
+                    String message = result.getString("message");
+                    int i = 1;
+                    if (i==1) {
+                        // tell everybody you have succed upload image and post strings
+                        Log.i("Messsage", message);
+                    } else {
+                        Log.i("Unexpected", message);
                     }
-                    else if(LoginFlag == "false"){
-                        Toast.makeText(getApplication(),Message,Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch (Exception ex){
-
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener(){
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(UserProfile.this,error+"",Toast.LENGTH_SHORT).show();
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+
+                        Log.e("Error Status", status);
+                        Log.e("Error Message", message);
+
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message+" Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message+ " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message+" Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.i("Error", errorMessage);
+                error.printStackTrace();
             }
-        }){
+        }) {
             @Override
-            protected Map<String,String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String,String>();
-                String User_Id = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("user_id","");
-                params.put("full_name",FullName);
-                params.put("phone_num",PhoneNo);
-                params.put("salt",Salt);
-                params.put("user_id",User_Id);
-                if(scaledPhoto != null){
-                params.put("picture_file",ImageToString(scaledPhoto));}
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                //params.put("api_token", "gh659gjhvdyudo973823tt9gvjf7i6ric75r76");
+                params.put("full_name", fullName.getText().toString());
+                params.put("phone_num", mobileNumber.getText().toString());
+                params.put("salt", Salt);
+                params.put("user_id", UserId);
+                return params;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+
+                Map<String, DataPart> params = new HashMap<>();
+
+                params.put("picture_file", new DataPart(FullName + "TestImage.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), ProfilePic.getDrawable()), "image/jpeg"));
+                //params.put("resume_file", new DataPart("file_cover.jpg", PDFPathandFile, "pdf"));
+
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
     }
 }

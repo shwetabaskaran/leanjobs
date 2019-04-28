@@ -104,6 +104,7 @@ public class Login extends AppCompatActivity {
                     String Email = Data.getString("email");
                     String Phone_num = Data.getString("phone_num");
                     String Full_Name = Data.getString("full_name");
+                    String ProfilePicURL = Data.getString("profile_pic_path");
 //                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("salt", Salt).commit();
 //                    String User_ID = Data.getString("user_id");
 //                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("user_id", User_ID).commit();
@@ -121,6 +122,7 @@ public class Login extends AppCompatActivity {
                         intent.putExtra("email",Email);
                         intent.putExtra("phoneNo",Phone_num);
                         intent.putExtra("salt",Salt);
+                        intent.putExtra("profilePicURL",ProfilePicURL);
 
                         startActivity(intent);
                         finish();
