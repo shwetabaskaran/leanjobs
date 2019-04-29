@@ -84,6 +84,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/Applybutton"
             android:text="Apply"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/JobWages"

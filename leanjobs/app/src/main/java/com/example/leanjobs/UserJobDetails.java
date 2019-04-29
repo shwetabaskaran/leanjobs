@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,9 +30,12 @@ import java.util.ArrayList;
 public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
 
     TextView jobtitle,jobroledesc,jobreqs,jobwages;
+    Button apply;
     public int jobID;
     public int page = 0;
-    public int user_id = 8;
+    public int user_id;
+    User user = new User();
+    UserJob ub = new UserJob();
 
 
     @Override
@@ -43,26 +47,43 @@ public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
         jobreqs = (TextView) findViewById(R.id.JobReqts);
         jobwages = (TextView) findViewById(R.id.JobWages);
 
+        user = (User) getIntent().getParcelableExtra("Userdetails");
+
+
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             Async asyncTask2 = new Async();
             asyncTask2.delegate = (AsyncResponse2) this;
-            asyncTask2.execute(extras.getInt("jobid"));
+            ub.setJobID(extras.getInt("jobid"));
+            ub.setUserID(extras.getString("userid"));
+            asyncTask2.execute(ub);
         }
 
     }
 
     @Override
     public void processFinish2(final Job job) {
-        int jobid = job.getJobID();
+        final int jobid = job.getJobID();
         jobtitle.setText(job.getjobTitle());
         jobroledesc.setText(job.getJobRoleDesc());
         jobreqs.setText(job.getjobReqs());
         jobwages.setText(job.getJobWages());
+
+        apply = (Button) findViewById(R.id.Applybutton);
+        apply.setOnClickListener(new Button.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),UserApply_Questionnaire.class);
+                intent.putExtra("userid", ub.getUserID());
+                intent.putExtra("jobid",ub.getJobID());
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
 
-class Async extends AsyncTask<Integer, Void, Wrapper> {
+class Async extends AsyncTask<UserJob, Void, Wrapper> {
 
     public AsyncResponse2 delegate = null;
     UserJobDetails obj = new UserJobDetails();
@@ -80,11 +101,13 @@ class Async extends AsyncTask<Integer, Void, Wrapper> {
     }
 
     @Override
-    protected Wrapper doInBackground(Integer... jobid) {
-        int job = jobid[0];
+    protected Wrapper doInBackground(UserJob... userjob) {
+        int jobid = userjob[0].getJobID();
+        String userid = userjob[0].getUserID();
+
         HttpClient httpClient = new DefaultHttpClient();
         HttpContext localContext = new BasicHttpContext();
-        String url = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/list_user?page=" + obj.page + "&user_id=" + obj.user_id;
+        String url = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/list_user?page=" + obj.page + "&user_id=" + userid;
         HttpGet httpGet = new HttpGet(url);
         String text = null;
         Wrapper w = new Wrapper();
@@ -95,13 +118,13 @@ class Async extends AsyncTask<Integer, Void, Wrapper> {
             text = getASCIIContentFromEntity(entity);
 
             w.results = text;
-            w.jobid = job;
+            w.jobid = jobid;
         } catch (Exception e) {
             w.results = e.getLocalizedMessage();
             return w;
         }
         w.results = text;
-        w.jobid = job;
+        w.jobid = jobid;
         return w;
     }
 

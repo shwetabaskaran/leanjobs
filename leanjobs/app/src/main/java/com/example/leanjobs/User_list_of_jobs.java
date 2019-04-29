@@ -5,6 +5,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,14 +32,26 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class User_list_of_jobs extends ListActivity implements AsyncResponse {
-    public int id = 8;
     public int page = 0;
     UserJobsAdapter adapter;
+    String UserId, fullname, phoneNo, email, userPicURL, ResumePath;
+    User u = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list_of_jobs);
+            Intent intent = getIntent();
+            UserId = intent.getStringExtra("userid");
+            fullname = intent.getStringExtra("FullName");
+            email = intent.getStringExtra("email");
+            phoneNo = intent.getStringExtra("phoneNo");
+            userPicURL = intent.getStringExtra("profilePicURL");
+            ResumePath = intent.getStringExtra("resumePath");
+            u.setUserID(UserId);
+            u.setfullname(fullname);
+            u.setEmail(email);
+            u.setPhone(phoneNo);
     }
 
     @Override
@@ -56,7 +69,9 @@ public class User_list_of_jobs extends ListActivity implements AsyncResponse {
                     Job selectedJob  = jobs.get(position);
                     Intent intent = new Intent(User_list_of_jobs.this, UserJobDetails.class);
                         intent.putExtra("jobid", selectedJob.getJobID());
-                        startActivity(intent);
+                        intent.putExtra("userid",u.getUserID());
+//                        intent.putExtra("Userdetails", (Parcelable) u);
+                    startActivity(intent);
                 }
             });
         }
@@ -66,11 +81,11 @@ public class User_list_of_jobs extends ListActivity implements AsyncResponse {
         super.onResume();
         LongRunningGetIO asyncTask =new LongRunningGetIO();
         asyncTask.delegate = this;
-        asyncTask.execute();
+        asyncTask.execute(u);
     }
 }
 
-class LongRunningGetIO extends AsyncTask<Void, Void, String> {
+class LongRunningGetIO extends AsyncTask<User, Void, String> {
 
     public AsyncResponse delegate = null;
     User_list_of_jobs obj = new User_list_of_jobs();
@@ -88,10 +103,11 @@ class LongRunningGetIO extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... params) {
+    protected String doInBackground(User... u) {
+        String usid = u[0].getUserID();
         HttpClient httpClient = new DefaultHttpClient();
         HttpContext localContext = new BasicHttpContext();
-        String url = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/list_user?page="+obj.page+"&user_id="+obj.id;
+        String url = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/list_user?page="+obj.page+"&user_id="+usid;
         HttpGet httpGet = new HttpGet(url);
         String text = null;
         try {

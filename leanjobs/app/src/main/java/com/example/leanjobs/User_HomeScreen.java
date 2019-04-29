@@ -79,6 +79,15 @@ public class User_HomeScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),
                         User_list_of_jobs.class);
+                Bundle UserBundle = new Bundle();
+                UserBundle.putString("User_User_id",UserId);
+                UserBundle.putString("User_FullName",FullName);
+                UserBundle.putString("User_PhoneNo",PhoneNo);
+                UserBundle.putString("User_Salt",Salt);
+                UserBundle.putString("User_Email",Email);
+                UserBundle.putString("User_ProfileURL",UserPicURL);
+                UserBundle.putString("User_ResumePath",ResumePath);
+                i.putExtras(UserBundle);
                 startActivity(i);
                 finish();
 
