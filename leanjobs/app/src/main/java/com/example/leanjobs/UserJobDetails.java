@@ -1,5 +1,6 @@
 package com.example.leanjobs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -26,6 +35,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
 
@@ -36,6 +47,8 @@ public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
     public int user_id;
     User user = new User();
     UserJob ub = new UserJob();
+    String UserID, Salt;
+    int JobID;
 
 
     @Override
@@ -48,8 +61,6 @@ public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
         jobwages = (TextView) findViewById(R.id.JobWages);
 
         user = (User) getIntent().getParcelableExtra("Userdetails");
-
-
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             Async asyncTask2 = new Async();
@@ -57,8 +68,51 @@ public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
             ub.setJobID(extras.getInt("jobid"));
             ub.setUserID(extras.getString("userid"));
             asyncTask2.execute(ub);
-        }
+            JobID = extras.getInt("jobid");
+            UserID = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_user_id","");
+            Salt = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("UserSalt","");
 
+        }
+    }
+
+    private void PostSignUpData(final int Jobid, final String UserID,final String Salt) {
+        String URLPost = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/apply_job";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URLPost, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject UserCredentials = new JSONObject(response);
+                    String LoginFlag = UserCredentials.getString("status");
+                    String Message = UserCredentials.getString("message");
+                    Toast.makeText(getApplication(),response,Toast.LENGTH_SHORT).show();
+                    if(LoginFlag == "true"){
+                        JSONObject Data = UserCredentials.getJSONObject("data");
+                    }
+                    else if(LoginFlag == "false"){
+                        Toast.makeText(getApplication(),Message,Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Exception ex){
+                    Toast.makeText(getApplication(),ex.toString(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(UserJobDetails.this,error+"",Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("job_id",String.valueOf(Jobid));
+                params.put("user_id",UserID);
+                params.put("salt",String.valueOf(Salt));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     @Override
@@ -73,11 +127,7 @@ public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
         apply.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),UserApply_Questionnaire.class);
-                intent.putExtra("userid", ub.getUserID());
-                intent.putExtra("jobid",ub.getJobID());
-                startActivity(intent);
-                finish();
+                PostSignUpData(JobID,UserID,Salt);
             }
         });
     }

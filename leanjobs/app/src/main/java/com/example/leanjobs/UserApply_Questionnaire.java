@@ -95,7 +95,7 @@ public class UserApply_Questionnaire extends ListActivity implements AsyncQuest 
 
     private void PostApplyJob(ArrayList<QuestionAnswer> questions,String answers[], int jobid, String userid)
     {
-        String URLPost = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/apply_job";
+
     }
 
 

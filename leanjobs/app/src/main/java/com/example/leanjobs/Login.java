@@ -101,7 +101,9 @@ public class Login extends AppCompatActivity {
                     JSONObject Data = UserCredentials.getJSONObject("data");
                     String Salt = Data.getString("salt");
                     String User_ID = Data.getString("user_id");
-                    String Email = Data.getString("email");
+                        getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_user_id",String.valueOf(User_ID)).commit();
+                        getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("UserSalt",String.valueOf(Salt)).commit();
+                        String Email = Data.getString("email");
                     String Phone_num = Data.getString("phone_num");
                     String Full_Name = Data.getString("full_name");
                     String ProfilePicURL = Data.getString("profile_pic_path");
