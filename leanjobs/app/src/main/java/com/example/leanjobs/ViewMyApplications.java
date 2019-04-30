@@ -5,6 +5,10 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -41,19 +45,24 @@ public class ViewMyApplications extends ListActivity implements AsyncResponseMyA
         setListAdapter(adapter);
 
         if (apps.size() > 0) {
-//            ListView listView = getListView();
-//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
-//                    Job selectedJob  = jobs.get(position);
-//                    Intent intent = new Intent(User_list_of_jobs.this, UserJobDetails.class);
-//                    intent.putExtra("jobid", selectedJob.getJobID());
-//                    intent.putExtra("userid",u.getUserID());
-////                        intent.putExtra("Userdetails", (Parcelable) u);
-//                    startActivity(intent);
-//                }
-//            });
+            ListView listView = getListView();
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
+                    Appln selectedApp  = apps.get(position);
+                    Intent intent = new Intent(ViewMyApplications.this, MyApplicationDetails.class);
+                    intent.putExtra("jobid",selectedApp.getJobIDAppl());
+                    intent.putExtra("appid",selectedApp.getApplicationID());
+                    intent.putExtra("jobtitle",selectedApp.getJobTitle());
+                    intent.putExtra("jobdesc",selectedApp.getRoleDescription());
+                    intent.putExtra("jobreq",selectedApp.getJobRequirements());
+                    intent.putExtra("wages",selectedApp.getWages());
+                    intent.putExtra("jobstat",selectedApp.getJobStatus());
+                    intent.putExtra("appstatus",selectedApp.getApplicationStatus());
+                    startActivity(intent);
+                }
+            });
         }
     }
 
