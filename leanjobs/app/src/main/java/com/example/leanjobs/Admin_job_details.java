@@ -1,8 +1,10 @@
 package com.example.leanjobs;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -26,7 +28,9 @@ import java.util.ArrayList;
 public class Admin_job_details extends AppCompatActivity implements AsyncResponseAdminJobdetails{
 
     TextView jobtitle,jobroledesc,jobreqs,jobwages,jobstatus;
+    String jobti, jobsta;
     Button changestatus;
+    public int jobid;
 //    Spinner dropdown;
     public int page = 0;
 
@@ -47,12 +51,28 @@ public class Admin_job_details extends AppCompatActivity implements AsyncRespons
 //        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
 //        dropdown.setAdapter(adapter);
 
+
         Bundle extras = getIntent().getExtras();
+        jobid = extras.getInt("jobid");
         if(extras != null) {
             AsyncAdminJobDetails asyncTaskAdminJobDetails = new AsyncAdminJobDetails();
             asyncTaskAdminJobDetails.delegate = (AsyncResponseAdminJobdetails) this;
             asyncTaskAdminJobDetails.execute(extras.getInt("jobid"));
         }
+
+        Button job = (Button) findViewById(R.id.AdminViewAppl);
+        job.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),
+                        List_of_applicants.class);
+                i.putExtra("jobid", jobid);
+                i.putExtra("jobtit",jobti);
+                i.putExtra("jobsta", jobsta);
+                startActivity(i);
+            }
+        });
+
 
     }
 
@@ -60,13 +80,16 @@ public class Admin_job_details extends AppCompatActivity implements AsyncRespons
     public void processFinishAdminJobDetails(final Job job) {
         int jobid = job.getJobID();
         jobtitle.setText(job.getjobTitle());
+        jobti = job.getjobTitle();
         if(job.getJobIsActive()==1) {
             jobstatus.setText("Active");
             changestatus.setText("Close Requisition");
+            jobsta = "Active";
         }
         else if(job.getJobIsActive()==0) {
             jobstatus.setText("Inactive");
             changestatus.setText("Re-open Requisition");
+            jobsta = "Inactive";
         }
 
         jobroledesc.setText(job.getJobRoleDesc());

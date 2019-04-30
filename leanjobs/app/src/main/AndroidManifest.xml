@@ -13,7 +13,10 @@
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
-        <activity android:name=".UserApplyQuestionnaireAdapter"></activity>
+        <activity android:name=".Admin_applicant_details"></activity>
+        <activity android:name=".ApplicantsAdapter" />
+        <activity android:name=".List_of_applicants" />
+        <activity android:name=".UserApplyQuestionnaireAdapter" />
         <activity android:name=".UserApply_Questionnaire" />
 
         <meta-data

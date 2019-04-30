@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_admin_applicant_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.leanjobs.Admin_applicant_details">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/JobTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Job title"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/AdminJobStatus"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Status"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:id="@+id/ApplicantName"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Applicant Name:"
+                android:layout_below="@+id/JobTitle"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="@dimen/text_size_medium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/applname"
+                android:layout_below="@+id/ApplicantName"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="name"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ApplResume"
+                android:text="Applicant Resume:"
+                android:layout_below="@+id/applname"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="@dimen/text_size_medium"/>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Applemail"
+                android:text="Applicant Email ID:"
+                android:layout_below="@+id/ApplResume"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="@dimen/text_size_medium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/emailid"
+                android:text="Email ID"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/Applemail"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Applphone"
+                android:text="Applicant Phone:"
+                android:layout_below="@+id/emailid"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="@dimen/text_size_medium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/phone"
+                android:text="Phone"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/Applphone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Applstatus"
+                android:text="Application Status:"
+                android:layout_below="@+id/phone"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="@dimen/text_size_medium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/status"
+                android:text="Status"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/Applstatus"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/AdminViewAppl"
+                android:text="Shortlist"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/status"
+                android:layout_marginTop="40dp"
+                android:background="@color/black"
+                android:textColor="@color/white"/>
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/AdminChangeJobStatus"-->
+            <!--android:layout_below="@+id/AdminCloseRequisition"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:text="Change Status"/>-->
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
