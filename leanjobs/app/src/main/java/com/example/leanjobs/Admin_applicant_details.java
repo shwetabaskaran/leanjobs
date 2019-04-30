@@ -2,9 +2,13 @@ package com.example.leanjobs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,6 +33,31 @@ public class Admin_applicant_details extends AppCompatActivity {
     public String appname,appemail,appphone,appstatus,jobtit,jobstat,resumeURL,salt,User_Id,NewStatus;
     TextView name,email,phone,status, jobtitle,jst,txtMessage;
     Button ViewResume, ChangeStatus, Accept, Reject;
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.homescreen, menu);
+        return true;
+        //return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                Intent i = new Intent(getApplicationContext(),Admin_HomeScreen.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +119,7 @@ public class Admin_applicant_details extends AppCompatActivity {
             ChangeStatus.setVisibility(View.INVISIBLE);
             Accept.setVisibility(View.INVISIBLE);
             Reject.setVisibility(View.INVISIBLE);
-            txtMessage.setTextColor(R.color.msgRed);
+            txtMessage.setTextColor(Color.RED);
         }
 
         Accept.setOnClickListener(new View.OnClickListener() {
