@@ -6,7 +6,7 @@
     <color name="MainColor">#333333</color>
          <color name="bg_login">#26ae90</color>
         <color name="bg_register">#2e3237</color>
-        <color name="bg_main">#428bca</color>
+        <color name="bg_main">#428BCA</color>
         <color name="white">#ffffff</color>
         <color name="input_login">#222222</color>
         <color name="input_login_hint">#999999</color>
@@ -18,9 +18,11 @@
         <color name="lbl_name">#333333</color>
         <color name="black_overlay">#66000000</color>
         <color name="light_grey">#ecebea</color>
-        <color name="appcolor">#b0bccd</color>
+        <color name="appcolor">#B0BCCD</color>
         <color name="black">#000000</color>>
         <color name="btn_logut_bg">#ff6861</color>
+        <color name="msgRed">#ff6861</color>
+        <color name="msgGreen">#84EE28</color>
 
 
 </resources>

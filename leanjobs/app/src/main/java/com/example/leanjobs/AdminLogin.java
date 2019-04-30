@@ -72,14 +72,16 @@ public class AdminLogin extends AppCompatActivity {
                     if(LoginFlag == "true"){
                         JSONObject Data = UserCredentials.getJSONObject("data");
                         String Salt = Data.getString("salt");
-                       // getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("salt", Salt).commit();
+                         getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("salt", Salt).commit();
                         String User_ID = Data.getString("user_id");
-                       // getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("user_id", User_ID).commit();
+                         getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("user_id", User_ID).commit();
                         String Email = Data.getString("email");
-                       // getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("email", Email).commit();
+
                         String Phone_num = Data.getString("phone_num");
                         //getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("phone_num", Phone_num).commit();
                         String Full_Name = Data.getString("full_name");
+                        String AdminTitle = Data.getString("admin_title");
+                        getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("admin_title", AdminTitle).commit();
                        //getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("full_name", Full_Name).commit();
                         Intent intent = new Intent(getApplicationContext(),
                                 Admin_HomeScreen.class);

@@ -11,14 +11,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Admin_HomeScreen extends AppCompatActivity {
-    String UserId, FullName, Email, PhoneNo,Salt;
+    String UserId, FullName, Email, PhoneNo,Salt,AdminTitle;
 TextView TxtWelcomeAdmin;
+Button btnAdminTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin__home_screen);
         Intent intent = getIntent();
+        btnAdminTitle = findViewById(R.id.button4);
         TxtWelcomeAdmin = findViewById(R.id.txtWelcomeAdmin);
         FullName = intent.getStringExtra("FullName");
         TxtWelcomeAdmin.setText("Welcome "+FullName);
@@ -27,7 +29,8 @@ TextView TxtWelcomeAdmin;
         PhoneNo = intent.getStringExtra("Phone_no");
         Salt = intent.getStringExtra("salt");
         Email = intent.getStringExtra("Email");
-
+        AdminTitle = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("admin_title","");
+        btnAdminTitle.setText(AdminTitle);
         Salt = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("salt","");
         jobs();
         profile();
@@ -87,10 +90,6 @@ TextView TxtWelcomeAdmin;
                         Admin_list_of_jobs.class);
                 startActivity(i);
                 finish();
-
-                Toast.makeText(getApplicationContext(),
-                        "Admin's list of jobs screen", Toast.LENGTH_LONG)
-                        .show();
             }
         });
     }

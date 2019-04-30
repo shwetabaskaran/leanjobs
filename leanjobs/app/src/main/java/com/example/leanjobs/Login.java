@@ -44,10 +44,6 @@ public class Login extends AppCompatActivity {
                         AdminLogin.class);
                 startActivity(i);
                 finish();
-
-                Toast.makeText(getApplicationContext(),
-                        "Admin Login Screen", Toast.LENGTH_LONG)
-                        .show();
             }
         });
 
@@ -72,10 +68,6 @@ public class Login extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(),SignUp.class);
                 startActivity(i);
                 finish();
-
-                Toast.makeText(getApplicationContext(),
-                        "SignUp Screen", Toast.LENGTH_SHORT)
-                        .show();
             }
         });
 
