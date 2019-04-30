@@ -76,6 +76,7 @@ public class List_of_applicants extends ListActivity implements AsyncResponse3 {
                     intent.putExtra("phone",selectedApplicant.getApplicantPhone());
                     intent.putExtra("status",selectedApplicant.getApplicantStatus());
                     intent.putExtra("jobid",selectedApplicant.getJobID());
+                    intent.putExtra("resumeURL",selectedApplicant.getApplicationResumeURL());
                     intent.putExtra("jobti",jobti);
                     intent.putExtra("jobsta", jobsta);
                     startActivity(intent);
@@ -140,6 +141,7 @@ class LongRunningGetIOO extends AsyncTask<Integer, Void, Wrapper> {
                     String appemail = applicants.getJSONObject(i).getString("email");
                     String appphone = applicants.getJSONObject(i).getString("phone_num");
                     int astat = Integer.parseInt(applicants.getJSONObject(i).getString("job_status"));
+                    String appResumeUrl = applicants.getJSONObject(i).getString("resume_path");
                     if(astat == 0)
                         appl.setApplicantStatus("Applied");
                     else if(astat == 1)
@@ -152,9 +154,10 @@ class LongRunningGetIOO extends AsyncTask<Integer, Void, Wrapper> {
                     appl.setApplicantName(appname);
                     appl.setApplicantemail(appemail);
                     appl.setApplicantPhone(appphone);
+                    appl.setApplicationResumeURL(appResumeUrl);
                     appl.setJobID(w.jobid);
                     applicantlist.add(appl);
-                    }
+                }
             }
             catch (JSONException e) {
                 e.printStackTrace();

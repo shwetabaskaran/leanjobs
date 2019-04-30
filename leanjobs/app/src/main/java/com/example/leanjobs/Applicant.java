@@ -1,12 +1,16 @@
 package com.example.leanjobs;
 
 public class Applicant {
+
+
+
     private int applicantID;
     private int jobID;
     private String applicantName;
     private String applicantemail;
     private String applicantphone;
     private String applicationstatus;
+    private  String applicationResumeURL;
 
     public Applicant(){}
 
@@ -42,4 +46,10 @@ public class Applicant {
         applicationstatus = s;
     }
 
+    public String getApplicationResumeURL() {
+        return applicationResumeURL;
+    }
+    public void setApplicationResumeURL(String applicationResumeURL) {
+        this.applicationResumeURL = applicationResumeURL;
+    }
 }
