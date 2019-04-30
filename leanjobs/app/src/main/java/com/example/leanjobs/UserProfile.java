@@ -48,7 +48,7 @@ import java.util.Map;
 
 public class UserProfile extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
-    byte[] PDFbytesArray;
+    private byte[] PDFbytesArray;
     private ImageView ProfilePic;
     String ResumePath;
     TextView PdfNameEditText ;
@@ -235,8 +235,6 @@ public class UserProfile extends AppCompatActivity {
                 InputStream is = this.getContentResolver().openInputStream(uri);
                 PDFbytesArray = new byte[is.available()];
                 is.read(PDFbytesArray);
-                Toast.makeText(UserProfile.this, PDFbytesArray.toString(), Toast.LENGTH_LONG).show();
-                //write to sdcard
             /*
             File myPdf=new File(Environment.getExternalStorageDirectory(), "myPdf.pdf");
             FileOutputStream fos=new FileOutputStream(myPdf.getPath());
@@ -281,19 +279,12 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
-                Toast.makeText(UserProfile.this, response.toString(), Toast.LENGTH_LONG).show();
 
                 try {
                     JSONObject result = new JSONObject(resultResponse);
                     String status = result.getString("status");
                     String message = result.getString("message");
-                    int i = 1;
-                    if (i==1) {
-                        // tell everybody you have succed upload image and post strings
-                        Log.i("Messsage", message);
-                    } else {
-                        Log.i("Unexpected", message);
-                    }
+                    Toast.makeText(getApplication(),message,Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -301,8 +292,6 @@ public class UserProfile extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(UserProfile.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -319,10 +308,10 @@ public class UserProfile extends AppCompatActivity {
             @Override
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
+                if(PDFbytesArray != null){
                 params.put("picture_file", new DataPart(FullName + " ProfilePic.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), ProfilePic.getDrawable()), "image/jpeg"));
                 params.put("resume_file", new DataPart(FullName+" Resume.pdf", PDFbytesArray, "pdf"));
-                return params;
-            }
+                }return params;}
         };
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
     }
