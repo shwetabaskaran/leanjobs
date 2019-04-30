@@ -1,9 +1,6 @@
 package com.example.leanjobs;
 
 public class Applicant {
-
-
-
     private int applicantID;
     private int jobID;
     private String applicantName;

@@ -8,11 +8,22 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.leanjobs.ViewMyApplications">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Applications"
+        android:text="My Applications"
+        android:textSize="@dimen/text_size_large"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        />
 
     <ListView
         android:id="@id/android:list"
+        android:layout_below="@+id/Applications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
