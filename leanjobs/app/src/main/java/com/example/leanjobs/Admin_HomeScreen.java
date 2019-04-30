@@ -2,6 +2,7 @@ package com.example.leanjobs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,7 +31,27 @@ TextView TxtWelcomeAdmin;
         Salt = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("salt","");
         jobs();
         profile();
+        logout();
     }
+
+    private void logout() {
+        Button logout = (Button) findViewById(R.id.btnAdminLogout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences LoginDetails = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE);
+                LoginDetails.edit().clear().commit();
+                Intent i = new Intent(getApplicationContext(),
+                        Login.class);
+                startActivity(i);
+                finish();
+                Toast.makeText(getApplicationContext(),
+                        "Logged out successfully", Toast.LENGTH_LONG)
+                        .show();
+            }
+        });
+    }
+
 
     private void profile() {
         Button job = (Button) findViewById(R.id.btnAdminProfile);
