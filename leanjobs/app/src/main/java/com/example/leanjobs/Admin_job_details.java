@@ -43,6 +43,7 @@ public class Admin_job_details extends AppCompatActivity implements AsyncRespons
     Button changestatus;
     public int jobid;
     String jobti, jobsta;
+    //    Spinner dropdown;
     public int page = 0;
 
     @Override
