@@ -27,7 +27,7 @@ public class Admin_applicant_details extends AppCompatActivity {
 
     public int appid, jobid;
     public String appname,appemail,appphone,appstatus,jobtit,jobstat,resumeURL,salt,User_Id,NewStatus;
-    TextView name,email,phone,status, jobtitle,jst,txtMessage;
+    TextView name,email,phone,status, jobtitle,jst;
     Button ViewResume, ChangeStatus, Accept, Reject;
 
     @Override
@@ -57,7 +57,7 @@ public class Admin_applicant_details extends AppCompatActivity {
         status = (TextView) findViewById(R.id.status);
         jobtitle = (TextView) findViewById(R.id.JobTitle);
         jst = (TextView) findViewById(R.id.AdminJobStatus);
-        txtMessage = findViewById(R.id.txtMessage);
+
         salt = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("salt","");
         User_Id = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("user_id","");
         name.setText(appname);
@@ -79,18 +79,14 @@ public class Admin_applicant_details extends AppCompatActivity {
             Reject.setVisibility(View.VISIBLE);
         }
         else  if(appstatus.equals("Accepted")){
-            txtMessage.setText("ACCEPTED");
             ChangeStatus.setVisibility(View.INVISIBLE);
             Accept.setVisibility(View.INVISIBLE);
             Reject.setVisibility(View.INVISIBLE);
-            txtMessage.getResources().getColor(R.color.msgGreen);
         }
         else  if(appstatus.equals("Rejected")){
-            txtMessage.setText("REJECTED");
             ChangeStatus.setVisibility(View.INVISIBLE);
             Accept.setVisibility(View.INVISIBLE);
             Reject.setVisibility(View.INVISIBLE);
-            txtMessage.setTextColor(R.color.msgRed);
         }
 
         Accept.setOnClickListener(new View.OnClickListener() {
@@ -98,8 +94,6 @@ public class Admin_applicant_details extends AppCompatActivity {
             public void onClick(View v) {
                 NewStatus = "2";
                 PostUserData();
-                Intent myIntent = new Intent(getApplicationContext(), List_of_applicants.class);
-                startActivityForResult(myIntent, 0);
             }
         });
         Reject.setOnClickListener(new View.OnClickListener() {
@@ -107,8 +101,6 @@ public class Admin_applicant_details extends AppCompatActivity {
             public void onClick(View v) {
                 NewStatus = "3";
                 PostUserData();
-                Intent myIntent = new Intent(getApplicationContext(), List_of_applicants.class);
-                startActivityForResult(myIntent, 0);
             }
         });
 
@@ -129,8 +121,6 @@ public class Admin_applicant_details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PostUserData();
-                Intent myIntent = new Intent(getApplicationContext(), List_of_applicants.class);
-                startActivityForResult(myIntent, 0);
             }
         });
 
@@ -148,6 +138,14 @@ public class Admin_applicant_details extends AppCompatActivity {
 
                     if(StatusFlag == "true"){
                         JSONObject Data = UserCredentials.getJSONObject("data");
+                        if(Data!=null) {
+//                            String ReturnStatus = Data.getString("new_status");
+//                            NewStatus = ReturnStatus;
+                            Intent i = new Intent(getApplicationContext(),
+                                    Admin_list_of_jobs.class);
+                            startActivity(i);
+                            finish();
+                        }
                         Toast.makeText(Admin_applicant_details.this,Message,Toast.LENGTH_SHORT).show();
                     }
                     else if(StatusFlag == "false"){
