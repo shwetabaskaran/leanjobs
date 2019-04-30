@@ -45,11 +45,6 @@ public class createJob extends AppCompatActivity {
         JobDesc = findViewById(R.id.JobDesc);
         JobTitle = findViewById(R.id.JobTitle);
         WagePerHour = findViewById(R.id.WagePerHour);
-        Question1 = findViewById(R.id.editQuestions1);
-        Question2 = findViewById(R.id.editQuestions2);
-        Question3 = findViewById(R.id.editQuestions3);
-        Question4 = findViewById(R.id.editQuestions4);
-        Question5 = findViewById(R.id.editQuestions5);
         TxtJobReq = findViewById(R.id.JobReq);
         submit = findViewById(R.id.submitbutton);
         cancel = findViewById(R.id.cancelbutton);
@@ -69,7 +64,9 @@ public class createJob extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    cancelJob();
+                    Intent intent = new Intent(getApplicationContext(), Admin_list_of_jobs.class);
+                    startActivity(intent);
+                    finish();
 
                 } catch (Exception ex) {
                 }
@@ -86,9 +83,7 @@ public class createJob extends AppCompatActivity {
                 try{
                     JSONObject UserCredentials = new JSONObject(response);
                     Toast.makeText(getApplication(),response.toString(),Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), createJob.class);
-                    startActivity(intent);
-                    finish();
+
                 }
                 catch (Exception ex){
                 }
@@ -108,29 +103,6 @@ public class createJob extends AppCompatActivity {
                 String jobTitle = JobTitle.getText().toString();
                 String wagePerHour = WagePerHour.getText().toString();
                 String JobReq = TxtJobReq.getText().toString();
-                String question1 = Question1.getText().toString().trim();
-                String question2 = Question2.getText().toString().trim();
-                String question3 = Question3.getText().toString().trim();
-                String question4 = Question4.getText().toString().trim();
-                String question5 = Question5.getText().toString().trim();
-                String[] questions1 = new String[5];
-                questions1[0] = question1;
-                questions1[1] = question2;
-                questions1[2] = question3;
-                questions1[3] = question4;
-                questions1[4] = question5;
-                String[] questions = new String[5];
-
-                for(int i = 0; i < 5; i++){
-                    if(questions1[i] != ""){
-                        questions[i] = questions1[i];
-                    }
-                }
-                JSONArray QuestionArray = new JSONArray();
-                for(int i=0; i < questions.length; i++) {
-                    QuestionArray.put(questions[i].trim());   // create array and add items into that
-                }
-                params.put("questions_data",QuestionArray.toString());
                 params.put("title", jobTitle);
                 params.put("role_desc", jobDesc);
                 params.put("job_reqs",JobReq);

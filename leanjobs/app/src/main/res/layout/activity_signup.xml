@@ -12,22 +12,7 @@
         android:id="@+id/frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
-
-        <ImageView
-            android:id="@+id/profilePic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/camera"/>
-
-        <ImageButton
-            android:id="@+id/camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:background="@drawable/smallcamera" />
-
-    </FrameLayout>
+        android:layout_centerHorizontal="true"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -142,16 +127,6 @@
         </EditText>
 
         <Button
-            android:id="@+id/UploadResume"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editPassword"
-            android:layout_marginTop="20dp"
-            android:drawableLeft="@drawable/upload"
-            android:layout_marginBottom="40dp"
-            android:text="Upload Resume" />
-
-        <Button
             android:id="@+id/Signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -163,11 +138,5 @@
             android:text="Sign up" />
 
     </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="51dp"
-        android:layout_height="32dp"
-        app:srcCompat="@drawable/circle" />
 
 </RelativeLayout>

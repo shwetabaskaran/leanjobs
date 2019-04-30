@@ -138,11 +138,8 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent();
-
                 intent.setType("application/pdf");
-
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-
                 startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQ_CODE);
 
 
@@ -159,7 +156,7 @@ public class UserProfile extends AppCompatActivity {
                     public void onResponse(Bitmap bitmap) {
                         ProfilePic.setImageBitmap(bitmap);
                     }
-                }, 0, 0, null,
+                }, 144, 144, null,
                 new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
                     }
