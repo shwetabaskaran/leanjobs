@@ -15,7 +15,7 @@
         android:theme="@style/CustomActionBarTheme">
         <activity android:name=".MyApplicationDetails"></activity>
         <activity android:name=".Admin_applicant_details" />
-        <!--  <activity android:name=".ApplicantsAdapter" /> -->
+         <activity android:name=".ApplicantsAdapter" />
 
 
          <activity android:name=".List_of_applicants" />

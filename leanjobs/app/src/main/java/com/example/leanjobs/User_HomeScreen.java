@@ -91,10 +91,6 @@ public class User_HomeScreen extends AppCompatActivity {
                 i.putExtras(UserBundle);
                 startActivity(i);
                 finish();
-
-                Toast.makeText(getApplicationContext(),
-                        "User's list of jobs screen", Toast.LENGTH_LONG)
-                        .show();
             }
         });
     }
@@ -117,10 +113,6 @@ public class User_HomeScreen extends AppCompatActivity {
                 i.putExtras(UserBundle);
                 startActivity(i);
                 finish();
-
-                Toast.makeText(getApplicationContext(),
-                        "User's applications", Toast.LENGTH_LONG)
-                        .show();
             }
         });
     }

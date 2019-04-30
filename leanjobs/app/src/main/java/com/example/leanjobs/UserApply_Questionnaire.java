@@ -38,27 +38,27 @@ public class UserApply_Questionnaire extends ListActivity implements AsyncQuest 
     UserApplyQuestionnaireAdapter adapter;
     ListView listView;
     UserJob ub = new UserJob();
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.homescreen, menu);
-        return true;
-        //return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                Intent i = new Intent(getApplicationContext(),User_HomeScreen.class);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.homescreen, menu);
+//        return true;
+//        //return super.onCreateOptionsMenu(menu);
+//    }
+//
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.home:
+//                Intent i = new Intent(getApplicationContext(),User_HomeScreen.class);
+//                startActivity(i);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
 
     @Override

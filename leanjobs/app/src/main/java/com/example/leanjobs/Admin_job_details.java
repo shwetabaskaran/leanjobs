@@ -1,17 +1,24 @@
 package com.example.leanjobs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -27,43 +34,21 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Admin_job_details extends AppCompatActivity implements AsyncResponseAdminJobdetails{
 
     TextView jobtitle,jobroledesc,jobreqs,jobwages,jobstatus;
-    String jobti, jobsta;
     Button changestatus;
     public int jobid;
-    //    Spinner dropdown;
+    String jobti, jobsta;
     public int page = 0;
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.homescreen, menu);
-        return true;
-        //return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                Intent i = new Intent(getApplicationContext(),Admin_HomeScreen.class);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin_job_details);
         setContentView(R.layout.activity_admin_job_details);
 
         jobtitle = (TextView) findViewById(R.id.JobTitle);
@@ -78,15 +63,17 @@ public class Admin_job_details extends AppCompatActivity implements AsyncRespons
 //        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
 //        dropdown.setAdapter(adapter);
 
-
         Bundle extras = getIntent().getExtras();
         jobid = extras.getInt("jobid");
         if(extras != null) {
             AsyncAdminJobDetails asyncTaskAdminJobDetails = new AsyncAdminJobDetails();
             asyncTaskAdminJobDetails.delegate = (AsyncResponseAdminJobdetails) this;
             asyncTaskAdminJobDetails.execute(extras.getInt("jobid"));
-        }
+            int jobid = extras.getInt("jobid");
+            getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("job_id",String.valueOf(jobid)).commit();
 
+
+        }
         Button job = (Button) findViewById(R.id.AdminViewAppl);
         job.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +88,66 @@ public class Admin_job_details extends AppCompatActivity implements AsyncRespons
         });
 
 
+
+        changestatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostStatusChangeRequest();
+            }
+        });
+    }
+
+
+    private void PostStatusChangeRequest() {
+        String URLPost = "http://dhillonds.com/leanjobsweb/index.php/api/jobs/change_requisition";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URLPost, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                try{
+                    Toast.makeText(getApplication(),response,Toast.LENGTH_SHORT).show();
+                    JSONObject UserCredentials = new JSONObject(response);
+                    String StatusFlag = UserCredentials.getString("status");
+                    String Message = UserCredentials.getString("message");
+                    if(StatusFlag == "true"){
+                        JSONObject Data = UserCredentials.getJSONObject("data");
+                        String Updated_Status = Data.getString("updated_status");
+                        if(Updated_Status.equals("1")){
+                            jobstatus.setText("Active");
+                            changestatus.setText("Close Requisition");
+                        }
+                        else if(Updated_Status.equals("0")){
+                            jobstatus.setText("Inactive");
+                            changestatus.setText("Re-open Requisition");
+                        }
+                    }
+                    else if(StatusFlag == "false"){
+                        Toast.makeText(getApplication(),"StatusFlag"+Message,Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Exception ex){
+                    Toast.makeText(getApplication(),ex.toString(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Admin_job_details.this,error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                String user_id = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("user_id","");
+                String salt = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("salt","");
+                String jobid = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("job_id","");
+                params.put("user_id",user_id);
+                params.put("salt",salt);
+                params.put("job_id",jobid.trim());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     @Override
@@ -177,7 +224,6 @@ class AsyncAdminJobDetails extends AsyncTask<Integer, Void, Wrapper> {
                 JSONObject jobj = new JSONObject(w.results);
                 String c = jobj.getString("data");
                 JSONArray jobs = new JSONArray(c);
-
                 for (int i = 0; i < jobs.length(); i++) {
                     int jobid = jobs.getJSONObject(i).getInt("job_id");
                     if (jobid == w.jobid) {
@@ -186,7 +232,6 @@ class AsyncAdminJobDetails extends AsyncTask<Integer, Void, Wrapper> {
                         String jobdesc = jobs.getJSONObject(i).getString("role_desc");
                         String jobreqs = jobs.getJSONObject(i).getString("job_reqs");
                         String jobwages = jobs.getJSONObject(i).getString("wages");
-
                         joba.setJobID(jobid);
                         joba.setJobTitle(jobtitle);
                         joba.setJobIsActive(Integer.parseInt(jobstatus));
@@ -194,6 +239,7 @@ class AsyncAdminJobDetails extends AsyncTask<Integer, Void, Wrapper> {
                         joba.setJobReqs(jobreqs);
                         joba.setJobWages(jobwages);
                     }
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

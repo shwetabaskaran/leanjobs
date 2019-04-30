@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
-    Button btnadmlogin, btnforgotpassword, btnsignup, btnlogin;
+    Button btnadmlogin, btnsignup, btnlogin;
     EditText Email,Password;
     String URLPost="http://dhillonds.com/leanjobsweb/index.php/api/users/login";
     @Override
@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         btnsignup = findViewById(R.id.btnsignup);
         btnadmlogin = findViewById(R.id.btnadmlogin);
-        btnforgotpassword = findViewById(R.id.btnforgotpassword);
+
         btnlogin = findViewById(R.id.btnLogin);
         Email = findViewById(R.id.email);
         Password = findViewById(R.id.password);
@@ -47,19 +47,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        btnforgotpassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),
-                        ForgotPassword.class);
-                startActivity(i);
-                finish();
-
-                Toast.makeText(getApplicationContext(),
-                        "Forgot password Screen", Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
 
 
         btnsignup.setOnClickListener(new View.OnClickListener() {

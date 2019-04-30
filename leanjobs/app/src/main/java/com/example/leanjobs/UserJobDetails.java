@@ -53,27 +53,27 @@ public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
     String UserID, Salt;
     int JobID;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.homescreen, menu);
-        return true;
-        //return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                Intent i = new Intent(getApplicationContext(),User_HomeScreen.class);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.homescreen, menu);
+//        return true;
+//        //return super.onCreateOptionsMenu(menu);
+//    }
+//
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.home:
+//                Intent i = new Intent(getApplicationContext(),User_HomeScreen.class);
+//                startActivity(i);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
 
     @Override
@@ -109,7 +109,6 @@ public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
                     JSONObject UserCredentials = new JSONObject(response);
                     String LoginFlag = UserCredentials.getString("status");
                     String Message = UserCredentials.getString("message");
-                    Toast.makeText(getApplication(),response,Toast.LENGTH_SHORT).show();
                     if(LoginFlag == "true"){
                         JSONObject Data = UserCredentials.getJSONObject("data");
                     }
