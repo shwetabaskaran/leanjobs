@@ -84,7 +84,7 @@ public class UserJobDetails extends AppCompatActivity implements AsyncResponse2{
                     JSONObject UserCredentials = new JSONObject(response);
                     String LoginFlag = UserCredentials.getString("status");
                     String Message = UserCredentials.getString("message");
-                    Toast.makeText(getApplication(),response,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(),Message,Toast.LENGTH_SHORT).show();
                     if(LoginFlag == "true"){
                         JSONObject Data = UserCredentials.getJSONObject("data");
                     }

@@ -105,7 +105,6 @@ public class Admin_job_details extends AppCompatActivity implements AsyncRespons
             @Override
             public void onResponse(String response) {
                 try{
-                    Toast.makeText(getApplication(),response,Toast.LENGTH_SHORT).show();
                     JSONObject UserCredentials = new JSONObject(response);
                     String StatusFlag = UserCredentials.getString("status");
                     String Message = UserCredentials.getString("message");

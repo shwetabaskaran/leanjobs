@@ -94,7 +94,7 @@ public class createJob extends AppCompatActivity {
             public void onResponse(String response) {
                 try{
                     JSONObject UserCredentials = new JSONObject(response);
-                    Toast.makeText(getApplication(),response.toString(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(),"Job has been created",Toast.LENGTH_SHORT).show();
 
                 }
                 catch (Exception ex){
