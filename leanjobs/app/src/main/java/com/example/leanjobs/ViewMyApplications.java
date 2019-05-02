@@ -5,6 +5,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -36,6 +37,17 @@ public class ViewMyApplications extends ListActivity implements AsyncResponseMyA
         setContentView(R.layout.activity_user_list_of_jobs);
         Intent intent = getIntent();
         UserId = intent.getStringExtra("User_User_id");
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Intent intent = new Intent(ViewMyApplications.this, User_HomeScreen.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

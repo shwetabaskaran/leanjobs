@@ -79,13 +79,18 @@ public class Login extends AppCompatActivity {
                     JSONObject Data = UserCredentials.getJSONObject("data");
                     String Salt = Data.getString("salt");
                     String User_ID = Data.getString("user_id");
-                        getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_user_id",String.valueOf(User_ID)).commit();
-                        getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("UserSalt",String.valueOf(Salt)).commit();
-                        String Email = Data.getString("email");
+                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_user_id",String.valueOf(User_ID)).commit();
+                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("UserSalt",String.valueOf(Salt)).commit();
+                    String Email = Data.getString("email");
+                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_email",String.valueOf(Email)).commit();
                     String Phone_num = Data.getString("phone_num");
+                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_phone",String.valueOf(Phone_num)).commit();
                     String Full_Name = Data.getString("full_name");
+                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_fullname",String.valueOf(Full_Name)).commit();
                     String ProfilePicURL = Data.getString("profile_pic_path");
+                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_profpic",String.valueOf(ProfilePicURL)).commit();
                     String ResumePath = Data.getString("resume_path");
+                    getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_resume",String.valueOf(ResumePath)).commit();
                     Intent intent = new Intent(getApplicationContext(),
                                 User_HomeScreen.class);
                         intent.putExtra("userid",User_ID);

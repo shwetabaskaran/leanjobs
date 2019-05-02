@@ -76,10 +76,11 @@ public class AdminLogin extends AppCompatActivity {
                         String User_ID = Data.getString("user_id");
                          getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("user_id", User_ID).commit();
                         String Email = Data.getString("email");
-
+                        getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("admin_email", Email).commit();
                         String Phone_num = Data.getString("phone_num");
-                        //getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("phone_num", Phone_num).commit();
+                        getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("admin_phone", Phone_num).commit();
                         String Full_Name = Data.getString("full_name");
+                        getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("admin_fullname", Full_Name).commit();
                         String AdminTitle = Data.getString("admin_title");
                         getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("admin_title", AdminTitle).commit();
                        //getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).edit() .putString("full_name", Full_Name).commit();

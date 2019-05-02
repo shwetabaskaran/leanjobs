@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -42,6 +43,17 @@ public class Admin_list_of_jobs extends ListActivity implements AsyncResponseAdm
         {
             Toast.makeText(getApplication(),ex.toString(),Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Intent intent = new Intent(Admin_list_of_jobs.this, Admin_HomeScreen.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     private void CreateJob() {

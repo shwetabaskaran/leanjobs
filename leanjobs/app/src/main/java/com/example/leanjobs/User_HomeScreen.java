@@ -18,13 +18,21 @@ public class User_HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user__home_screen);
         Intent intent = getIntent();
-        UserId = intent.getStringExtra("userid");
-        FullName = intent.getStringExtra("FullName");
-        Email = intent.getStringExtra("email");
-        PhoneNo = intent.getStringExtra("phoneNo");
-        Salt = intent.getStringExtra("salt");
-        UserPicURL = intent.getStringExtra("profilePicURL");
-        ResumePath = intent.getStringExtra("resumePath");
+//        UserId = intent.getStringExtra("userid");
+//        FullName = intent.getStringExtra("FullName");
+//        Email = intent.getStringExtra("email");
+//        PhoneNo = intent.getStringExtra("phoneNo");
+//        Salt = intent.getStringExtra("salt");
+//        UserPicURL = intent.getStringExtra("profilePicURL");
+//        ResumePath = intent.getStringExtra("resumePath");
+        UserId = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_user_id","");
+        FullName = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_fullname",""); ;
+        Email = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_email",""); ;
+        PhoneNo = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_phone",""); ;
+        Salt = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("UserSalt",""); ;
+        UserPicURL = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_profpic",""); ;
+        ResumePath = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_resume",""); ;
+
         TextView TxtUserHome = (TextView) findViewById(R.id.TxtUserHomeView);
         TxtUserHome.setText("Welcome "+FullName);
         jobs();
