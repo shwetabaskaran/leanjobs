@@ -240,7 +240,7 @@ public class UserProfile extends AppCompatActivity {
                 }
             }
         }
-        else  if(requestCode == PDF_REQ_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        else  if(data.getData() != null) {
             Uri uri = data.getData();
             File file = new File(uri.getPath());
 
