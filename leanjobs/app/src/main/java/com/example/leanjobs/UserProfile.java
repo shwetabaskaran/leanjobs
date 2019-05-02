@@ -1,6 +1,7 @@
 package com.example.leanjobs;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -78,10 +79,10 @@ public class UserProfile extends AppCompatActivity {
 
 
         Intent i = getIntent();
-        //ProfilePicURL = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("profilePicURL","");
-
-        ProfilePicURL = i.getStringExtra("User_ProfileURL");
-        ResumePath = i.getStringExtra("User_ResumePath");
+        ProfilePicURL = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_profpic","");
+        ResumePath = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_resume","");
+        //ProfilePicURL = i.getStringExtra("User_ProfileURL");
+        //ResumePath = i.getStringExtra("User_ResumePath");
         if(i.hasExtra("User_User_id"))
         {
             FullName = i.getStringExtra("User_FullName");
