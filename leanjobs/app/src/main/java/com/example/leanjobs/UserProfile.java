@@ -1,6 +1,7 @@
 package com.example.leanjobs;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,8 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +36,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 
-//import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,11 +47,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-
-
-
-
 
 public class UserProfile extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
@@ -70,30 +65,6 @@ public class UserProfile extends AppCompatActivity {
     File file;String filename;
     String PdfNameHolder, PdfPathHolder, PdfID;
     String URLPost="http://dhillonds.com/leanjobsweb/index.php/api/users/update_profile";
-//For Home button
-
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.homescreen, menu);
-        return true;
-        //return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                Toast.makeText(getApplicationContext(),
-                        "Home button", Toast.LENGTH_SHORT)
-                        .show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,10 +79,10 @@ public class UserProfile extends AppCompatActivity {
 
 
         Intent i = getIntent();
-        //ProfilePicURL = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("profilePicURL","");
-
-        ProfilePicURL = i.getStringExtra("User_ProfileURL");
-        ResumePath = i.getStringExtra("User_ResumePath");
+        ProfilePicURL = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_profpic","");
+        ResumePath = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_resume","");
+        //ProfilePicURL = i.getStringExtra("User_ProfileURL");
+        //ResumePath = i.getStringExtra("User_ResumePath");
         if(i.hasExtra("User_User_id"))
         {
             FullName = i.getStringExtra("User_FullName");
@@ -178,6 +149,17 @@ public class UserProfile extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Intent intent = new Intent(UserProfile.this, User_HomeScreen.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
     private void CheckProfilePicture() {
         try{
         String CheckURL = ProfilePicURL;
@@ -200,15 +182,15 @@ public class UserProfile extends AppCompatActivity {
 
     }
 
-//    public boolean onOptionsItemSelected(MenuItem item){
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                onBackPressed();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 

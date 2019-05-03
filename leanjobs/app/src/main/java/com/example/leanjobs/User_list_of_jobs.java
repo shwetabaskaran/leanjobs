@@ -9,9 +9,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -37,33 +35,8 @@ import java.util.ArrayList;
 public class User_list_of_jobs extends ListActivity implements AsyncResponse {
     public int page = 0;
     UserJobsAdapter adapter;
-    String UserId, fullname, phoneNo, email, userPicURL, ResumePath;
+    String UserId, fullname, phoneNo, email, userPicURL, ResumePath, Salt;
     User u = new User();
-
-
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.homescreen, menu);
-//        return true;
-//        //return super.onCreateOptionsMenu(menu);
-//    }
-//
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.home:
-//                Intent i = new Intent(getApplicationContext(),User_HomeScreen.class);
-//                startActivity(i);
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +49,7 @@ public class User_list_of_jobs extends ListActivity implements AsyncResponse {
             phoneNo = intent.getStringExtra("phoneNo");
             userPicURL = intent.getStringExtra("profilePicURL");
             ResumePath = intent.getStringExtra("resumePath");
+            Salt = intent.getStringExtra("User_Salt");
             u.setUserID(UserId);
             u.setfullname(fullname);
             u.setEmail(email);
@@ -110,6 +84,17 @@ public class User_list_of_jobs extends ListActivity implements AsyncResponse {
         LongRunningGetIO asyncTask =new LongRunningGetIO();
         asyncTask.delegate = this;
         asyncTask.execute(u);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Intent intent = new Intent(User_list_of_jobs.this, User_HomeScreen.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }
 
