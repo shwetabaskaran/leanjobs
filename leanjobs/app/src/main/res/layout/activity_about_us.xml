@@ -17,15 +17,16 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/leanjobs"/>
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@null"
-    android:padding="30dp"
-    android:text="@string/description"
-    android:id="@+id/btn_aboutus"
-    android:textAllCaps="false"
-    android:textColor="@color/btn_login"/>
+
+        <TextView
+            android:id="@+id/btn_aboutus"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@null"
+            android:padding="30dp"
+            android:text="@string/description"
+            android:textAllCaps="false"
+            android:textColor="@color/btn_login" />
 
     </LinearLayout>
 
