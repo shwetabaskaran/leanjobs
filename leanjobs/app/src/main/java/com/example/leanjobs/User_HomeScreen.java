@@ -72,6 +72,8 @@ public class User_HomeScreen extends AppCompatActivity {
                 LoginDetails.edit().clear().commit();
                 Intent i = new Intent(getApplicationContext(),
                         Login.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
                 finish();
                 Toast.makeText(getApplicationContext(),
