@@ -13,11 +13,12 @@
         android:roundIcon="@drawable/leanlogox"
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <activity android:name=".MyApplicationDetails"></activity>
         <activity android:name=".Admin_applicant_details" />
-        <activity android:name=".ApplicantsAdapter" />
+        <!--<activity android:name=".ApplicantsAdapter" />-->
         <activity android:name=".List_of_applicants" />
-        <activity android:name=".UserApplyQuestionnaireAdapter" />
+        <!--<activity android:name=".UserApplyQuestionnaireAdapter" />-->
         <activity android:name=".UserApply_Questionnaire" />
 
         <meta-data
