@@ -52,6 +52,8 @@ Button btnAdminTitle;
                 LoginDetails.edit().clear().commit();
                 Intent i = new Intent(getApplicationContext(),
                         Login.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
                 finish();
                 Toast.makeText(getApplicationContext(),
@@ -68,13 +70,13 @@ Button btnAdminTitle;
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),
-                        UserProfile.class);
+                        AdminProfile.class);
                 Bundle UserBundle = new Bundle();
-                UserBundle.putString("Admin_User_id",UserId);
-                UserBundle.putString("Admin_FullName",FullName);
-                UserBundle.putString("Admin_PhoneNo",PhoneNo);
-                UserBundle.putString("Admin_Salt",Salt);
-                UserBundle.putString("Admin_Email",Email);
+//                UserBundle.putString("Admin_User_id",UserId);
+//                UserBundle.putString("Admin_FullName",FullName);
+//                UserBundle.putString("Admin_PhoneNo",PhoneNo);
+//                UserBundle.putString("Admin_Salt",Salt);
+//                UserBundle.putString("Admin_Email",Email);
                 i.putExtras(UserBundle);
                 startActivity(i);
                 finish();

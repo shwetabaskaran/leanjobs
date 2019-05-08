@@ -43,7 +43,8 @@
         <activity
             android:name=".UserProfile"
             android:parentActivityName=".User_HomeScreen" />
-        <activity android:name=".AdminProfile" />
+        <activity android:name=".AdminProfile"
+            android:parentActivityName=".Admin_HomeScreen"/>
         <activity
             android:name=".SignUp"
             android:exported="true" />

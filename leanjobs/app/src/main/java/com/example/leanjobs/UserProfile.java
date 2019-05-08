@@ -83,28 +83,33 @@ public class UserProfile extends AppCompatActivity {
         ResumePath = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_resume","");
         //ProfilePicURL = i.getStringExtra("User_ProfileURL");
         //ResumePath = i.getStringExtra("User_ResumePath");
-        if(i.hasExtra("User_User_id"))
-        {
-            FullName = i.getStringExtra("User_FullName");
-            PhoneNo = i.getStringExtra("User_PhoneNo");
-            Email = i.getStringExtra("User_Email");
-            Salt = i.getStringExtra("User_Salt");
-            UserId = i.getStringExtra("User_User_id");
+//        if(i.hasExtra("User_User_id"))
+//        {
+//            FullName = i.getStringExtra("User_FullName");
+//            PhoneNo = i.getStringExtra("User_PhoneNo");
+//            Email = i.getStringExtra("User_Email");
+//            Salt = i.getStringExtra("User_Salt");
+//            UserId = i.getStringExtra("User_User_id");
+            FullName =  getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_fullname","");
+            PhoneNo =  getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_phone","");
+            Email =  getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_email","");
+            Salt =  getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("UserSalt","");
+            UserId =  getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_user_id","");
 
             fullName.setText(FullName);
             mobileNumber.setText(PhoneNo);
             emailAddress.setText(Email);
-        }
-        else if(i.hasExtra("Admin_User_id")){
-            FullName = i.getStringExtra("Admin_FullName");
-            PhoneNo = i.getStringExtra("Admin_PhoneNo");
-            Email = i.getStringExtra("Admin_Email");
-            Salt = i.getStringExtra("Admin_Salt");
-            UserId = i.getStringExtra("Admin_User_id");
-            fullName.setText(FullName);
-            mobileNumber.setText(PhoneNo);
-            emailAddress.setText(Email);
-        }
+//        }
+//        else if(i.hasExtra("Admin_User_id")){
+//            FullName = i.getStringExtra("Admin_FullName");
+//            PhoneNo = i.getStringExtra("Admin_PhoneNo");
+//            Email = i.getStringExtra("Admin_Email");
+//            Salt = i.getStringExtra("Admin_Salt");
+//            UserId = i.getStringExtra("Admin_User_id");
+//            fullName.setText(FullName);
+//            mobileNumber.setText(PhoneNo);
+//            emailAddress.setText(Email);
+//        }
         CheckProfilePicture();
         emailAddress.setEnabled(false);
         UploadPDF = (Button) findViewById(R.id.userprofileUploadResume);
@@ -297,6 +302,16 @@ public class UserProfile extends AppCompatActivity {
                     JSONObject result = new JSONObject(resultResponse);
                     String status = result.getString("status");
                     String message = result.getString("message");
+                    if(status == "true"){
+                        String Name,Number;
+                        Name = fullName.getText().toString();
+                        Number = mobileNumber.getText().toString();
+                        getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_fullname", Name).commit();
+                        getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_phone", Number).commit();
+                        Intent i = new Intent(getApplicationContext(),User_HomeScreen.class);
+                        startActivity(i);
+                        finish();
+                    }
                     Toast.makeText(getApplication(),message,Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
