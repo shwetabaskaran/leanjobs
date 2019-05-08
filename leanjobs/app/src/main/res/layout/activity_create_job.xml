@@ -30,7 +30,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:ems="14"
-        android:imeOptions="actionNext">
+        android:imeOptions="actionNext"
+        android:maxLength="25">
 
         <requestFocus />
     </EditText>

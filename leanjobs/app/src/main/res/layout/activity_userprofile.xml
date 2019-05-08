@@ -60,16 +60,6 @@
 
         </EditText>
 
-        <ImageButton
-            android:id="@+id/changeUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/edituserFullName"
-            android:layout_alignRight="@+id/edituserFullName"
-            android:layout_alignBottom="@+id/edituserFullName"
-            android:padding="5dp"
-            android:src="@drawable/edit_icon" />
-
         <TextView
             android:id="@+id/textuserEmail"
             android:layout_width="wrap_content"
@@ -95,16 +85,6 @@
 
         </EditText>
 
-        <ImageButton
-            android:id="@+id/changeUserEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/edituserEmail"
-            android:layout_alignRight="@+id/edituserEmail"
-            android:layout_alignBottom="@+id/edituserEmail"
-            android:padding="5dp"
-            android:src="@drawable/edit_icon" />
-
         <TextView
             android:id="@+id/textuserMobile"
             android:layout_width="wrap_content"
@@ -126,17 +106,8 @@
             android:layout_alignParentLeft="true"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:imeOptions="actionNext"></EditText>
-
-        <ImageButton
-            android:id="@+id/changeUserMobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/edituserMobile"
-            android:layout_alignRight="@+id/edituserMobile"
-            android:layout_alignBottom="@+id/edituserMobile"
-            android:padding="5dp"
-            android:src="@drawable/edit_icon" />
+            android:imeOptions="actionNext"
+            android:inputType="number"></EditText>
 
         <Button
             android:id="@+id/userprofileUploadResume"

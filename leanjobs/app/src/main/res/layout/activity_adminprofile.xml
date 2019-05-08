@@ -43,16 +43,6 @@
             android:layout_marginRight="15dp"
             android:imeOptions="actionNext"></EditText>
 
-        <ImageButton
-            android:id="@+id/changeAdminName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/editadminFullName"
-            android:layout_alignRight="@+id/editadminFullName"
-            android:layout_alignBottom="@+id/editadminFullName"
-            android:padding="5dp"
-            android:src="@drawable/edit_icon" />
-
         <TextView
             android:id="@+id/textadminEmail"
             android:layout_width="wrap_content"
@@ -98,17 +88,8 @@
             android:layout_marginStart="9dp"
             android:layout_marginLeft="9dp"
             android:layout_marginTop="80dp"
-            android:imeOptions="actionNext"></EditText>
-
-        <ImageButton
-            android:id="@+id/changeAdminEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/editadminEmail"
-            android:layout_alignRight="@+id/editadminEmail"
-            android:layout_alignBottom="@+id/editadminEmail"
-            android:padding="5dp"
-            android:src="@drawable/edit_icon" />
+            android:imeOptions="actionNext"
+            android:inputType="number"></EditText>
 
         <Button
             android:id="@+id/adminprofSave"
