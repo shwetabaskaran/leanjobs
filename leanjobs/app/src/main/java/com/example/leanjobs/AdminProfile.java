@@ -2,6 +2,7 @@ package com.example.leanjobs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -48,7 +49,10 @@ public class AdminProfile extends AppCompatActivity {
         FullName.setText(fullName);
         Email.setText(email);
         PhoneNo.setText(phoneNo);
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         Save = findViewById(R.id.adminprofSave);
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,15 +110,7 @@ public class AdminProfile extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK ) {
@@ -124,5 +120,14 @@ public class AdminProfile extends AppCompatActivity {
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
