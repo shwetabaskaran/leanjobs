@@ -113,10 +113,10 @@ public class UserProfile extends AppCompatActivity {
         CheckProfilePicture();
         emailAddress.setEnabled(false);
         UploadPDF = (Button) findViewById(R.id.userprofileUploadResume);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
         initImageButton();
 
         btnSave.setOnClickListener(new View.OnClickListener() {

@@ -49,10 +49,10 @@ public class AdminProfile extends AppCompatActivity {
         FullName.setText(fullName);
         Email.setText(email);
         PhoneNo.setText(phoneNo);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
         Save = findViewById(R.id.adminprofSave);
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
