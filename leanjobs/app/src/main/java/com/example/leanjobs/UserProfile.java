@@ -302,17 +302,24 @@ public class UserProfile extends AppCompatActivity {
                     JSONObject result = new JSONObject(resultResponse);
                     String status = result.getString("status");
                     String message = result.getString("message");
+
                     if(status == "true"){
-                        String Name,Number;
+                        JSONObject Data = result.getJSONObject("data");
+                        String Name,Number,PicURL,ResumeURL;
+                        PicURL = Data.getString("profile_pic_path");
+                        ResumeURL = Data.getString("resume_path");
                         Name = fullName.getText().toString();
                         Number = mobileNumber.getText().toString();
                         getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_fullname", Name).commit();
                         getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_phone", Number).commit();
+                        getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_profpic", PicURL).commit();
+                        getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).edit() .putString("User_resume", ResumeURL).commit();
                         Intent i = new Intent(getApplicationContext(),User_HomeScreen.class);
                         startActivity(i);
+                        Toast.makeText(getApplication(),message,Toast.LENGTH_SHORT).show();
                         finish();
                     }
-                    Toast.makeText(getApplication(),message,Toast.LENGTH_SHORT).show();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
