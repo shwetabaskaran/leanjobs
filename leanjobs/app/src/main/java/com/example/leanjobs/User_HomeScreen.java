@@ -34,7 +34,7 @@ public class User_HomeScreen extends AppCompatActivity {
         ResumePath = getSharedPreferences("UserDataPreferences", Context.MODE_PRIVATE).getString("User_resume",""); ;
 
         TextView TxtUserHome = (TextView) findViewById(R.id.TxtUserHomeView);
-        TxtUserHome.setText("Welcome "+FullName);
+        TxtUserHome.setText("Bienvenido "+FullName);
         jobs();
         applications();
         logout();

@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:backgroundTint="@color/light_grey"
-            android:hint="@string/hint_username"
+            android:hint="Nombre de usuario"
             android:inputType="textEmailAddress"
             android:singleLine="true"
             android:textColor="@color/input_login"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:backgroundTint="@color/light_grey"
-            android:hint="@string/hint_password"
+            android:hint="Contraseña"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textColor="@color/input_login"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@color/btn_login"
-            android:text="@string/btn_login"
+            android:text="INICIAR SESIÓN"
             android:textColor="@color/white"/>
 
         <Button
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@color/btn_login"
-            android:text="Are you an Admin?"
+            android:text="Eres un administrador?"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dip"
             android:background="@null"
-            android:text="@string/btn_link_to_register"
+            android:text="Necesito una cuenta? Regístrate"
             android:textAllCaps="false"
             android:textColor="@color/btn_login"
             android:textSize="15dp" />

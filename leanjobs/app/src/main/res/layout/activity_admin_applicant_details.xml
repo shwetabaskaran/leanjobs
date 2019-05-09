@@ -17,7 +17,7 @@
         android:layout_marginTop="450dp"
         android:layout_marginEnd="12dp"
         android:background="@color/black"
-        android:text="Reject"
+        android:text="Rechazar"
         android:textColor="@color/white" />
 
     <ScrollView
@@ -38,7 +38,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
-                android:text="Job title"
+                android:text="Título profesional"
                 android:textSize="@dimen/text_size_large" />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:layout_below="@+id/JobTitle"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Applicant Name:"
+                android:text="Nombre del solicitante:"
                 android:textSize="@dimen/text_size_medium" />
 
             <TextView
@@ -78,7 +78,7 @@
                 android:layout_below="@+id/ApplicantName"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="44dp"
-                android:text="Applicant Email ID:"
+                android:text="Email del solicitante:"
                 android:textSize="@dimen/text_size_medium" />
 
             <TextView
@@ -97,7 +97,7 @@
                 android:layout_below="@+id/emailid"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Applicant Phone:"
+                android:text="Teléfono del solicitante:"
                 android:textSize="@dimen/text_size_medium" />
 
             <TextView
@@ -116,7 +116,7 @@
                 android:layout_below="@+id/phone"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Application Status:"
+                android:text="Estado de la aplicación:"
                 android:textSize="@dimen/text_size_medium" />
 
             <TextView
@@ -135,7 +135,7 @@
                 android:layout_below="@+id/status"
                 android:layout_marginTop="127dp"
                 android:background="@color/black"
-                android:text="Shortlist"
+                android:text="Preseleccionados"
                 android:textColor="@color/white" />
 
             <Button
@@ -145,7 +145,7 @@
                 android:layout_below="@+id/status"
                 android:layout_marginTop="45dp"
                 android:background="@color/black"
-                android:text="View Applicant Resume"
+                android:text="Ver el currículum del solicitante"
                 android:textColor="@color/white" />
 
             <Button
@@ -157,7 +157,7 @@
                 android:layout_marginStart="9dp"
                 android:layout_marginTop="450dp"
                 android:background="@color/black"
-                android:text="Accept"
+                android:text="Aceptar"
                 android:textColor="@color/white" />
 
             <!--<TextView-->

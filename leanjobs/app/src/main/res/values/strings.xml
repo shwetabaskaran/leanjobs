@@ -25,7 +25,7 @@
     <string name="name">Fullname</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_forgot_password">ForgotPassword</string>
+    <string name="description">LEAN es una organización sin ánimo de lucro con sede en España. Su principal objetivo es recolectar medicamentos para ser enviados a países necesitados. LEAN ha crecido tanto que es imposible manejar sus tareas solo con su equipo personal de voluntarios.</string>
     <string name="title_activity_admin_login">AdminLogin</string>
-    <string name="description">LEAN is a nonprofit organization based in Spain. Its main purpose is to collect medicines to be sent to needed countries.  LEAN has grown so much that it is impossible to handle its tasks just with its volunteer personnel.   </string>
 
 </resources>

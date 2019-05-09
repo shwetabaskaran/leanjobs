@@ -112,12 +112,12 @@ public class Admin_job_details extends AppCompatActivity implements AsyncRespons
                         JSONObject Data = UserCredentials.getJSONObject("data");
                         String Updated_Status = Data.getString("updated_status");
                         if(Updated_Status.equals("1")){
-                            jobstatus.setText("Active");
-                            changestatus.setText("Close Requisition");
+                            jobstatus.setText("Activo");
+                            changestatus.setText("Cerrar Solicitud");
                         }
                         else if(Updated_Status.equals("0")){
-                            jobstatus.setText("Inactive");
-                            changestatus.setText("Re-open Requisition");
+                            jobstatus.setText("Inactivo");
+                            changestatus.setText("Re-Abrir Solicitud");
                         }
                     }
                     else if(StatusFlag == "false"){
@@ -156,13 +156,13 @@ public class Admin_job_details extends AppCompatActivity implements AsyncRespons
         jobtitle.setText(job.getjobTitle());
         jobti = job.getjobTitle();
         if(job.getJobIsActive()==1) {
-            jobstatus.setText("Active");
-            changestatus.setText("Close Requisition");
+            jobstatus.setText("Activo");
+            changestatus.setText("Cerrar Solicitud");
             jobsta = "Active";
         }
         else if(job.getJobIsActive()==0) {
-            jobstatus.setText("Inactive");
-            changestatus.setText("Re-open Requisition");
+            jobstatus.setText("Inactivo");
+            changestatus.setText("Re-Obrir Solicitud");
             jobsta = "Inactive";
         }
 

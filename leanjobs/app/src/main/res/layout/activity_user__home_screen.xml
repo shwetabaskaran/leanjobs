@@ -44,7 +44,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/button3"
                     android:background="@drawable/right_buttom_btn_line"
-                    android:text="Jobs"
+                    android:text="Trabajos"
                     android:textSize="18sp"
                     android:gravity="center|bottom"
                     android:paddingBottom="10dp"/>
@@ -63,7 +63,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/button4"
                     android:background="@drawable/right_buttom_btn_line"
-                    android:text="Applications"
+                    android:text="Aplicaciones"
                     android:textSize="18sp"
                     android:gravity="center|bottom"
                     android:paddingBottom="10dp"/>
@@ -92,7 +92,7 @@
                     android:background="@drawable/right_buttom_btn_line"
                     android:gravity="center|bottom"
                     android:paddingBottom="10dp"
-                    android:text="profile"
+                    android:text="perfil"
                     android:textSize="18sp" />
                 <ImageView
                     android:layout_width="wrap_content"
@@ -112,7 +112,7 @@
                     android:background="@drawable/right_buttom_btn_line"
                     android:gravity="center|bottom"
                     android:paddingBottom="10dp"
-                    android:text="Logout"
+                    android:text="Cerrar sesión"
                     android:textSize="18sp" />
                 <ImageView
                     android:layout_width="wrap_content"

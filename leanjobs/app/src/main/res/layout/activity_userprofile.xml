@@ -45,7 +45,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:text="Full Name" />
+            android:text="Nombre completo" />
 
         <EditText
             android:id="@+id/edituserFullName"
@@ -70,7 +70,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
-            android:text="Email Address" />
+            android:text="Dirección de correo electrónico" />
 
         <EditText
             android:id="@+id/edituserEmail"
@@ -95,7 +95,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
-            android:text="Mobile Number" />
+            android:text="Número de teléfono móvil" />
 
         <EditText
             android:id="@+id/edituserMobile"
@@ -117,34 +117,34 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
             android:drawableLeft="@drawable/upload"
-            android:text="Upload Resume"
+            android:text="Subir CV"
             android:textAllCaps="false" />
 
         <Button
             android:id="@+id/userprofSave"
-            android:layout_width="135dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="259dp"
+            android:layout_marginStart="71dp"
             android:layout_marginTop="336dp"
             android:layout_marginEnd="16dp"
+            android:layout_toEndOf="@+id/btnViewResume"
             android:background="@color/black"
-            android:text="Update Profile"
+            android:text="Actualización del perfil"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnViewResume"
-            android:layout_width="wrap_content"
+            android:layout_width="153dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="17dp"
             android:layout_marginTop="336dp"
             android:background="@color/black"
-            android:text="View Active Resume"
+            android:text="Ver currículum activo"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 

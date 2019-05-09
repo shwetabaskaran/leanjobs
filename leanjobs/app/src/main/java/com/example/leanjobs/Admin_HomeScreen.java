@@ -37,7 +37,7 @@ Button btnAdminTitle;
         PhoneNo = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("admin_phone","");;
         Salt = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("salt","");;
         Email = getSharedPreferences("AdminDataPreferences", Context.MODE_PRIVATE).getString("admin_email","");;
-        TxtWelcomeAdmin.setText("Welcome "+FullName);
+        TxtWelcomeAdmin.setText("Bienvenido "+FullName);
         jobs();
         profile();
         logout();

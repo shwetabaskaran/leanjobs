@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Jobtit"
-        android:text="Jobs"
+        android:text="Trabajos"
         android:textSize="@dimen/text_size_large"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
