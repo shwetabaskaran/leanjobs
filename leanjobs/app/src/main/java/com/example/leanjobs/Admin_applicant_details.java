@@ -63,27 +63,34 @@ public class Admin_applicant_details extends AppCompatActivity {
         name.setText(appname);
         email.setText(appemail);
         phone.setText(appphone);
-        status.setText(appstatus);
         jobtitle.setText(jobtit);
-        jst.setText(jobstat);
+
+        if(jobstat.equals("Active"))
+            jst.setText("Activo");
+        else if(jobstat.equals("Inactive"))
+            jst.setText("Inactivo");
 
 
         if(appstatus.equals("Applied")){
             NewStatus = "1";
+            status.setText("Aplicado");
             Accept.setVisibility(View.INVISIBLE);
             Reject.setVisibility(View.INVISIBLE);
         }
         else if(appstatus.equals("Shortlisted")){
+            status.setText("Preseleccionados");
             ChangeStatus.setVisibility(View.INVISIBLE);
             Accept.setVisibility(View.VISIBLE);
             Reject.setVisibility(View.VISIBLE);
         }
         else  if(appstatus.equals("Accepted")){
+            status.setText("Aceptado");
             ChangeStatus.setVisibility(View.INVISIBLE);
             Accept.setVisibility(View.INVISIBLE);
             Reject.setVisibility(View.INVISIBLE);
         }
         else  if(appstatus.equals("Rejected")){
+            status.setText("Rechazado");
             ChangeStatus.setVisibility(View.INVISIBLE);
             Accept.setVisibility(View.INVISIBLE);
             Reject.setVisibility(View.INVISIBLE);
@@ -112,7 +119,7 @@ public class Admin_applicant_details extends AppCompatActivity {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
                     startActivity(browserIntent);}
                 catch (Exception ex){
-                    Toast.makeText(Admin_applicant_details.this, "No Resume Available", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Admin_applicant_details.this, "No hay currículum disponible", Toast.LENGTH_LONG).show();
                 }
             }
         });

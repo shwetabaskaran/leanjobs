@@ -57,7 +57,7 @@ Button btnAdminTitle;
                 startActivity(i);
                 finish();
                 Toast.makeText(getApplicationContext(),
-                        "Logged out successfully", Toast.LENGTH_LONG)
+                        "Desconectado con éxito", Toast.LENGTH_LONG)
                         .show();
             }
         });

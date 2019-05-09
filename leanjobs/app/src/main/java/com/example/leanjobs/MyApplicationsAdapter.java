@@ -33,11 +33,20 @@ public class MyApplicationsAdapter extends ArrayAdapter<Appln> {
             jtitle.setText(apps.getJobTitle());
 
             TextView jstatus = (TextView) v.findViewById(R.id.ApplListJobStatus);
-            jstatus.setText(apps.getJobStatus());
+            if(apps.getJobStatus().equals("Active"))
+                jstatus.setText("Activo");
+            else if(apps.getJobStatus().equals("Inactive"))
+                jstatus.setText("Inactivo");
 
             TextView astatus = (TextView) v.findViewById(R.id.ApplListApplStatus);
-            astatus.setText(apps.getApplicationStatus());
-
+            if(apps.getApplicationStatus().equals("Applied"))
+                astatus.setText("Aplicado");
+            else if(apps.getApplicationStatus().equals("Shortlisted"))
+                astatus.setText("Preseleccionados");
+            else if(apps.getApplicationStatus().equals("Accepted"))
+                astatus.setText("Aceptado");
+            else if(apps.getApplicationStatus().equals("Rejected"))
+                astatus.setText("Rechazado");
 
         } catch (Exception e) {
             e.printStackTrace();

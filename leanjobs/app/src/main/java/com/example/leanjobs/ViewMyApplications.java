@@ -156,7 +156,7 @@ class MyApplicat extends AsyncTask<String, Void, String> {
                     else if(astat == 1)
                         appstatus = "Shortlisted";
                     else if(astat == 2)
-                        appstatus = "Selected";
+                        appstatus = "Accepted";
                     else if(astat == 3)
                         appstatus = "Rejected";
 

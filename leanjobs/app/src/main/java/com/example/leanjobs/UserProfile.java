@@ -136,7 +136,7 @@ public class UserProfile extends AppCompatActivity {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
                 startActivity(browserIntent);}
                 catch (Exception ex){
-                    Toast.makeText(UserProfile.this, "No Resume Available", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserProfile.this, "No hay currículum disponible", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -147,7 +147,7 @@ public class UserProfile extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setType("application/pdf");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Pdf"), PDF_REQ_CODE);
+                startActivityForResult(Intent.createChooser(intent, "Seleccione Pdf"), PDF_REQ_CODE);
 
 
             }
@@ -206,7 +206,7 @@ public class UserProfile extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (ContextCompat.checkSelfPermission(UserProfile.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                         if (ActivityCompat.shouldShowRequestPermissionRationale(UserProfile.this, android.Manifest.permission.CAMERA)) {
-                            Snackbar.make(findViewById(R.id.activity_signup), "The app needs permission to take pictures.", Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
+                            Snackbar.make(findViewById(R.id.activity_signup), "La aplicación necesita permiso para tomar fotos.", Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
 
@@ -284,7 +284,7 @@ public class UserProfile extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     takePhoto();
                 } else {
-                    Toast.makeText(UserProfile.this, "You will not be able to save contact pictures from this app", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserProfile.this, "No podrás guardar imágenes de contacto desde esta aplicación.", Toast.LENGTH_LONG).show();
                 }
 
             }

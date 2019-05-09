@@ -35,11 +35,21 @@ public class MyApplicationDetails extends AppCompatActivity {
             ast = (TextView) findViewById(R.id.astatus);
 
             jtitle.setText(jobtit);
-            jstat.setText(jobstat);
+            if(jobstat.equals("Active"))
+                jstat.setText("Activo");
+            else if(jobstat.equals("Inactive"))
+                jstat.setText("Inactivo");
             jdes.setText(jobdesc);
             jreq.setText(jobreq);
             jwag.setText(wages);
-            ast.setText(appstat);
+            if(appstat.equals("Applied"))
+                ast.setText("Aplicado");
+            if(appstat.equals("Shortlisted"))
+                ast.setText("Preseleccionados");
+            if(appstat.equals("Accepted"))
+                ast.setText("Aceptado");
+            if(appstat.equals("Rejected"))
+                ast.setText("Rechazado");
 
         }
     }

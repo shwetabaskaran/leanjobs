@@ -77,7 +77,7 @@ public class User_HomeScreen extends AppCompatActivity {
                 startActivity(i);
                 finish();
                 Toast.makeText(getApplicationContext(),
-                        "User Logged out successfully", Toast.LENGTH_LONG)
+                        "Usuario desconectado con éxito", Toast.LENGTH_LONG)
                         .show();
             }
         });
@@ -103,7 +103,7 @@ public class User_HomeScreen extends AppCompatActivity {
                 finish();
 
                 Toast.makeText(getApplicationContext(),
-                        "User's list of jobs screen", Toast.LENGTH_LONG)
+                        "Pantalla de lista de trabajos del usuario", Toast.LENGTH_LONG)
                         .show();
             }
         });
@@ -129,7 +129,7 @@ public class User_HomeScreen extends AppCompatActivity {
                 finish();
 
                 Toast.makeText(getApplicationContext(),
-                        "User's applications", Toast.LENGTH_LONG)
+                        "Aplicaciones de usuario", Toast.LENGTH_LONG)
                         .show();
             }
         });

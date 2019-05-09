@@ -54,7 +54,7 @@ public class SignUp extends AppCompatActivity {
                     String LoginFlag = UserCredentials.getString("status");
                     String Message = UserCredentials.getString("message");
                     if(LoginFlag == "true"){
-                        String SignUp = "User has been created successfully";
+                        String SignUp = "El usuario ha sido creado exitosamente";
                         Toast.makeText(getApplication(),SignUp,Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(),
                                 Login.class);

@@ -35,7 +35,7 @@ public class AdminJobsAdapter extends ArrayAdapter<Job> {
             TextView jobDesc = (TextView) v.findViewById(R.id.AdminJobListDesc);
             jobDesc.setText(job.getJobRoleDesc());
             TextView jobWages = (TextView) v.findViewById(R.id.AdminJobListWages);
-            jobWages.setText("Wages: "+job.getJobWages());
+            jobWages.setText("Salario: "+job.getJobWages());
 
         } catch (Exception e) {
             e.printStackTrace();
